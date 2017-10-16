@@ -35,6 +35,9 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
     <?= $this->fetch('script') ?>
 </head>
 <body>
+        <?= $this->fetch('header') ?>
+
+    
 
     <div class="container clearfix">
         <?= $this->fetch('content') ?>

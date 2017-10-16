@@ -65,10 +65,41 @@ public function fighter(){
 
 public function sight(){
     
+    $this->loadModel('Grids');
+    $posPlayer = $this->Grids->getPosFighter();
+    $this->set('posPlayer',$posPlayer);
+    
+    $gridWidth = $this->Grids->getWidth();
+    $gridHeight = $this->Grids->getHeight();
+    $this->set('gridWidth', $gridWidth);
+    $this->set('gridHeight', $gridHeight);
+    
+    /*
+    $this->loadModel('Grids');
+    $line = $this->Grids->getWidth();
+    $column =$this->Grids->getHeight();
+    
+    for($i=0;$i<$line;$i++){
+        for($j=0;$j<$column;$j++){
+            $PosX = $this->Grids->getPosXFighter();
+            $PosY = $this->Grids->getPosYFighter();
+            if ($i==$PosY && $j==$PosX){
+                return 
+            }
+        
+        }
+    }
+     
+     */
+    
+    //exemple d'affichage de la grille
+    
+    
 }
 
 public function diary(){
     
 }
+
 
 }

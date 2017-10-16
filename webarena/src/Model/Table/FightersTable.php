@@ -15,7 +15,14 @@ class FightersTable extends Table
         //$figterlist= $this->query("SELECT * FROM fighters;");
         return $figterlist;
     }
+      
+    public function getFighter($x,$y){
+        return ok;
+    }
+        
 }
+    
+
 
 /* 
  * To change this license header, choose License Headers in Project Properties.

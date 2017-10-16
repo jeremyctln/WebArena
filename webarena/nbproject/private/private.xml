@@ -6,10 +6,8 @@
             <file>file:/C:/wamp64/www/webarena/src/Controller/ArenasController.php</file>
             <file>file:/C:/wamp64/www/webarena/src/Template/Arenas/footertest.ctp</file>
             <file>file:/C:/wamp64/www/webarena/src/Template/Arenas/fighter.ctp</file>
-            <file>file:/C:/wamp64/www/webarena/src/Template/Arenas/index.ctp</file>
             <file>file:/C:/wamp64/www/webarena/config/routes.php</file>
             <file>file:/C:/wamp64/www/webarena/src/Controller/AppController.php</file>
-            <file>file:/C:/wamp64/www/webarena/webroot/css/base.css</file>
             <file>file:/C:/wamp64/www/webarena/src/Template/Layout/default.ctp</file>
             <file>file:/C:/wamp64/www/webarena/src/Template/Element/Flash/error.ctp</file>
             <file>file:/C:/wamp64/www/webarena/src/Template/Arenas/sight.ctp</file>
@@ -18,10 +16,20 @@
             <file>file:/C:/wamp64/www/webarena/src/Model/Table/FightersTable.php</file>
             <file>file:/C:/wamp64/www/webarena/src/Controller/PagesController.php</file>
             <file>file:/C:/wamp64/www/webarena/src/Template/Arenas/verif.ctp</file>
-            <file>file:/C:/wamp64/www/webarena/src/Model/Table/PlayersTable.php</file>
             <file>file:/C:/wamp64/www/webarena/src/Template/Pages/home.ctp</file>
             <file>file:/C:/wamp64/www/webarena/src/Template/Arenas/login.ctp</file>
+            <file>file:/C:/wamp64/www/webarena/src/Template/Element/Flash/default.ctp</file>
+            <file>file:/C:/wamp64/www/webarena/src/Model/Table/GridsTable.php</file>
             <file>file:/C:/wamp64/www/webarena/webroot/css/footer.css</file>
+            <file>file:/C:/wamp64/www/webarena/webroot/css/foundation.min.css</file>
+            <file>file:/C:/wamp64/www/webarena/src/Template/Arenas/header.ctp</file>
+            <file>file:/C:/wamp64/www/webarena/src/Template/Arenas/index.ctp</file>
+            <file>file:/C:/wamp64/www/webarena/webroot/css/foundation.css</file>
+            <file>file:/C:/wamp64/www/webarena/webroot/css/base.css</file>
+            <file>file:/C:/wamp64/www/webarena/src/Model/Table/PlayersTable.php</file>
+            <file>file:/C:/wamp64/www/webarena/src/Application.php</file>
+            <file>file:/C:/wamp64/www/webarena/webroot/css/home.css</file>
+            <file>file:/C:/wamp64/www/webarena/webroot/css/headerSight.css</file>
         </group>
     </open-files>
 </project-private>
