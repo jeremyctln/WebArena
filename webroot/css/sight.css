@@ -1,0 +1,41 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : Oct 18, 2017, 6:31:54 PM
+    Author     : jeremy_pc
+*/
+
+#playGround {
+    
+}
+
+#playGround table tr {
+    height : 48px;
+    width  : 48px;
+}
+
+#playGround table td {
+    width: 48px;
+    height:48px;
+    
+
+    border     : 1px dashed rgb(32, 97, 64);
+
+    cursor     : pointer;
+}
+
+.zone {
+    width: 48px;
+    height:48px;
+}
+
+.fighter {
+    width      : 55px;
+    height     : 63px;
+    display    : inline-block;
+    position   : absolute;
+    margin-top : -8px;
+}
