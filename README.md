@@ -1,3 +1,23 @@
+IMPORTANT! Before to start we need to see each other to make things clear.
+
+Repartition of the work:
+
+Etienne:
+-framework foundation
+-presentation of all page
+-Session
+
+Cécile:
+-Event (easy)
+-You will help stanislas after that
+
+Stanilsas:
+-page inventaire of the fighter
+
+Jérémy:
+-game 
+
+
 # CakePHP Application Skeleton
 
 [![Build Status](https://img.shields.io/travis/cakephp/app/master.svg?style=flat-square)](https://travis-ci.org/cakephp/app)
