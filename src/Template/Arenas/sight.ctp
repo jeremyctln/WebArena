@@ -113,20 +113,7 @@ and open the template in the editor.
             </table>
         </section>
         
-        
-        <?php
-        
-        echo $this->Form->create('POST');
-        echo $this->Form->button('haut', ['value'=> 'up', 'name'=>'touche']);
-        echo $this->Form->button('droite', ['value'=> 'right', 'name' => 'touche']);
-        echo $this->Form->button('gauche',  ['value'=> 'left', 'name'=> 'touche']);
-        echo $this->Form->button('bas', ['value'=>'down', 'name' => 'touche']);
-        echo $this->Form->end();
-        
-        
-       
-        ?>
-        
+             
        
        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
           
@@ -156,12 +143,20 @@ and open the template in the editor.
 
        </script>              
   <?php
-        echo $this->Form->create('POST');
+        //PART WHEN THE PLAYER WANT TO MOVE AND TO ATTACK
+        echo $this->Form->create('post');
+        echo $this->Form->button('up', ['value'=> 'up', 'name'=>'toucheMove']);
+        echo $this->Form->button('right', ['value'=> 'right', 'name' => 'toucheMove']);
+        echo $this->Form->button('left',  ['value'=> 'left', 'name'=> 'toucheMove']);
+        echo $this->Form->button('down', ['value'=>'down', 'name' => 'toucheMove']);
+        echo $this->Form->end();
+        
+        //FORM HIDDEN ASK TO THE TEACHER
+        /*
         echo $this->Form->hidden('pY', ['value'=> $py]);
         echo $this->Form->hidden('pX', ['value'=> $px]);
-        echo $this->Form->end();
+        echo $this->Form->end();*/
     
-  
   ?>
         
         

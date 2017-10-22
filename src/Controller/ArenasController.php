@@ -79,37 +79,51 @@ public function sight(){
     
     //DISPLAY THE GRID IN THEVIEW
     $this->set('idsession', $idPlayer);
-    
-    $posPlayer = $this->Grids->getPosFighter();
-    
+        
     //marche
     //demander aussi pour le tableau avec les zone sombre...
      if($this->request->is('post')){
         //if ($this->request->getData("haut")!=NULL){
             pr($this->request->getData());
             $game = $this->request->getData();
-            if ($game["touche"]== "up"){
-                echo"touche haut";
-                $direction = 'up';
-                $moveUp = $this->Fighters->fighterMove($idPlayer, $idFighter, $direction);
-                
-                //regader si position de 
-            }elseif ($game["touche"]== "right"){
-                echo"touche right";
-                $direction = 'right';
-                $moveUp = $this->Fighters->fighterMove($idPlayer, $idFighter, $direction);
-                //regader si position de 
-            }elseif ($game["touche"]== "left"){
-                echo"touche left";
-                $direction = 'left';
-                $moveUp = $this->Fighters->fighterMove($idPlayer, $idFighter, $direction);
-                //regader si position de 
-            }elseif ($game["touche"]== "down"){
-                echo"touche down";
-                $direction = 'down';
-                $moveUp = $this->Fighters->fighterMove($idPlayer, $idFighter, $direction);
-                //regader si position de 
-            }
+            
+            if($game)
+                //WHEN THE PLAYER WANT TO MOVE
+                if ($game["toucheMove"]== "up"){
+                    echo"touche haut";
+                    
+                    $direction = 'up';
+                    $moveUp = $this->Fighters->fighterMove($idPlayer, $idFighter, $direction);
+                    
+                    //IN THE CASE WE THE VALUE RETURN IS A fighter THAT MEAN
+                    // THERE IS A FIGHTER IN THE CASE
+                    // ATTACK THE FIGHTER
+                    $attackUp = $this->Fighters->fighterAttack($idPlayer, $idFighter, $direction);
+                    echo $moveUp;
+                    
+                    //regader si position de 
+                }elseif ($game["toucheMove"]== "right"){
+                    echo"touche right";
+                    $direction = 'right';
+                    $moveUp = $this->Fighters->fighterMove($idPlayer, $idFighter, $direction);
+                    //regader si position de 
+                }elseif ($game["toucheMove"]== "left"){
+                    echo"touche left";
+                    $direction = 'left';
+                    $moveUp = $this->Fighters->fighterMove($idPlayer, $idFighter, $direction);
+                    //regader si position de 
+                }elseif ($game["toucheMove"]== "down"){
+                    echo"touche down";
+                    $direction = 'down';
+                    $moveUp = $this->Fighters->fighterMove($idPlayer, $idFighter, $direction);
+                    //regader si position de 
+                }
+            
+            
+            //ADD THE CASE WHERE THE FIGHTER ATTAQUE AN OTHER FIGHTER
+            // SI ATTAQUE VERS LE HAUT /
+            //CALL THE METHODE ATTAQUE IN THE MODEL; 
+            //
     }
     
     //$this->loadModel('Players');
@@ -138,8 +152,13 @@ public function sight(){
                 }*/
     
     //echanger l'array de pos Player en une autre array ou l'on pourrait stocker tute les infos dans cette array 
+    
+    //THE ARRAY THAT WE SEND TO THE LOOP IN THE VIEW
+    //MIMPLEMENTATION OF THE VIEW HERE
+    $posPlayer = $this->Grids->getPosFighter();
     $this->set('posPlayer',$posPlayer);
     
+    //SEND WIDTH AND THE HIGHT OF THE GRID
     $gridWidth = $this->Grids->getWidth();
     $gridHeight = $this->Grids->getHeight();
     $this->set('gridWidth', $gridWidth);
