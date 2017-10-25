@@ -69,61 +69,88 @@ public function fighter(){
 public function sight(){
     
     $this->loadModel('Fighters');
-    $this->loadModel('Grids');
-    
-    
+    $this->loadModel('Grids'); 
+    $this->loadModel('Tools');
+    $this->loadModel('Surroundings');
     
     $idPlayer = '545f827c-576c-4dc5-ab6d-27c33186dc3e';
     $idFighter = '1';
     
-    
     //DISPLAY THE GRID IN THEVIEW
     $this->set('idsession', $idPlayer);
+    
+    ///////////////////////////////////////////
+    
+    //CREATION OF NEW 
+    //$this->Tools->createTools();
+    //$toolList = $this->Tools->getTools();
+    
+    
+    ///////////////////////////////////////////
         
     //marche
     //demander aussi pour le tableau avec les zone sombre...
-     if($this->request->is('post')){
-        //if ($this->request->getData("haut")!=NULL){
-            pr($this->request->getData());
-            $game = $this->request->getData();
+    if($this->request->is('post')){
+        $game = $this->request->getData();
+
+        //WHEN THE PLAYER WANT TO MOVE
+        if ($game["toucheMove"]== "up"){
+            echo"touche haut";
+
+            $direction = 'up';
+            $move = $this->Fighters->fighterMove($idPlayer, $idFighter, $direction);
+
+            //IN THE CASE WE THE VALUE RETURN IS A fighter THAT MEAN
+            // THERE IS A FIGHTER IN THE CASE
+            // ATTACK THE FIGHTER
+
+            if ($move == 'fighter'){
+                $attack = $this->Fighters->fighterAttack($idPlayer, $idFighter, $direction);            
+            }elseif ($move == "tool"){
+                //recuperer le tool à la coordonné donnée!
+            }
+
+            //regader si position de 
+        }elseif ($game["toucheMove"]== "right"){
+            echo"touche right";
+            $direction = 'right';
+            $move = $this->Fighters->fighterMove($idPlayer, $idFighter, $direction);
+
+            if ($move == 'fighter'){
+                $attack = $this->Fighters->fighterAttack($idPlayer, $idFighter, $direction);            
+            }elseif ($move == "tool"){
+                //recuperer le tool à la coordonné donnée!
+            }
+
+        }elseif ($game["toucheMove"]== "left"){
+            echo"touche left";
+            $direction = 'left';
+            $move = $this->Fighters->fighterMove($idPlayer, $idFighter, $direction);
+
+            if ($move == 'fighter'){
+                $attack = $this->Fighters->fighterAttack($idPlayer, $idFighter, $direction);            
+            }elseif ($move == "tool"){
+                //recuperer le tool à la coordonné donnée!
+            }
             
-            if($game)
-                //WHEN THE PLAYER WANT TO MOVE
-                if ($game["toucheMove"]== "up"){
-                    echo"touche haut";
-                    
-                    $direction = 'up';
-                    $moveUp = $this->Fighters->fighterMove($idPlayer, $idFighter, $direction);
-                    
-                    //IN THE CASE WE THE VALUE RETURN IS A fighter THAT MEAN
-                    // THERE IS A FIGHTER IN THE CASE
-                    // ATTACK THE FIGHTER
-                    $attackUp = $this->Fighters->fighterAttack($idPlayer, $idFighter, $direction);
-                    echo $moveUp;
-                    
-                    //regader si position de 
-                }elseif ($game["toucheMove"]== "right"){
-                    echo"touche right";
-                    $direction = 'right';
-                    $moveUp = $this->Fighters->fighterMove($idPlayer, $idFighter, $direction);
-                    //regader si position de 
-                }elseif ($game["toucheMove"]== "left"){
-                    echo"touche left";
-                    $direction = 'left';
-                    $moveUp = $this->Fighters->fighterMove($idPlayer, $idFighter, $direction);
-                    //regader si position de 
-                }elseif ($game["toucheMove"]== "down"){
-                    echo"touche down";
-                    $direction = 'down';
-                    $moveUp = $this->Fighters->fighterMove($idPlayer, $idFighter, $direction);
-                    //regader si position de 
-                }
+        }elseif ($game["toucheMove"]== "down"){
+            echo"touche down";
+            $direction = 'down';
+            $move = $this->Fighters->fighterMove($idPlayer, $idFighter, $direction);
+
+            if ($move == 'fighter'){
+                $attack = $this->Fighters->fighterAttack($idPlayer, $idFighter, $direction);            
+            }elseif ($move == "tool"){
+                //recuperer le tool à la coordonné donnée!
+            }
             
-            
-            //ADD THE CASE WHERE THE FIGHTER ATTAQUE AN OTHER FIGHTER
-            // SI ATTAQUE VERS LE HAUT /
-            //CALL THE METHODE ATTAQUE IN THE MODEL; 
-            //
+        }
+
+
+        //ADD THE CASE WHERE THE FIGHTER ATTAQUE AN OTHER FIGHTER
+        // SI ATTAQUE VERS LE HAUT /
+        //CALL THE METHODE ATTAQUE IN THE MODEL; 
+        //
     }
     
     //$this->loadModel('Players');
@@ -164,6 +191,14 @@ public function sight(){
     $this->set('gridWidth', $gridWidth);
     $this->set('gridHeight', $gridHeight);
     
+    
+    $posMainFighter = $this->Fighters->getMainFighter($idFighter, $idPlayer);
+    $posEnemyFighter = $this->Fighters->getEnemyFighter($idFighter, $idPlayer);
+    $posTools = $this->Tools->getTools();
+    $this->Surroundings->setSurroundings($posMainFighter, $posEnemyFighter, $posTools);
+    $gridDisplay = $this->Surroundings->getSurroundings();
+    $this->set('gridDisplay', $gridDisplay);
+    //envoie des info ici à la vue
    
    
     
