@@ -10,6 +10,14 @@ class ArenasController  extends AppController
 {
 public function index()
 {
+
+    // 3 lignes suivantes à rajouté a chauqe page (sauf login) pour cérifier qu'on est bien loggé (commenté pr désactiver si besoin, ça ne change rien à la var session)
+    $session = $this->request->session();
+    if($session->read('player.Pid') == null){
+        return $this->redirect(['controller' => 'Arenas', 'action' => 'login']);
+    } // 3 lignes précédentes à rajouté a chauqe page (sauf login) pour cérifier qu'on est bien loggé
+
+    
     //$this->set('myname',"julien");
     
     //permet de creer un lien vers le model ou un fichier s'appel Fighters
@@ -38,13 +46,13 @@ public function index()
     
     
 }
-public function login(){
-    
-    
-    
-}
 
 public function verif(){
+    // 3 lignes suivantes à rajouté a chauqe page (sauf login) pour cérifier qu'on est bien loggé (commenté pr désactiver si besoin, ça ne change rien à la var session)
+    $session = $this->request->session();
+    if($session->read('player.Pid') == null){
+        return $this->redirect(['controller' => 'Arenas', 'action' => 'login']);
+    } // 3 lignes précédentes à rajouté a chauqe page (sauf login) pour cérifier qu'on est bien loggé
     
     $password=$_POST['NamePass'];
     echo $password;
@@ -60,6 +68,11 @@ public function verif(){
     
 }
 public function fighter(){
+    // 3 lignes suivantes à rajouté a chauqe page (sauf login) pour cérifier qu'on est bien loggé (commenté pr désactiver si besoin, ça ne change rien à la var session)
+    $session = $this->request->session();
+    if($session->read('player.Pid') == null){
+        return $this->redirect(['controller' => 'Arenas', 'action' => 'login']);
+    } // 3 lignes précédentes à rajouté a chauqe page (sauf login) pour cérifier qu'on est bien loggé
     
     
     
@@ -67,6 +80,13 @@ public function fighter(){
 }
 
 public function sight(){
+
+    // 3 lignes suivantes à rajouté a chauqe page (sauf login) pour cérifier qu'on est bien loggé (commenté pr désactiver si besoin, ça ne change rien à la var session)
+    $session = $this->request->session();
+    if($session->read('player.Pid') == null){
+        return $this->redirect(['controller' => 'Arenas', 'action' => 'login']);
+    } // 3 lignes précédentes à rajouté a chauqe page (sauf login) pour cérifier qu'on est bien loggé
+
     
     $this->loadModel('Fighters');
     $this->loadModel('Grids'); 
@@ -235,8 +255,95 @@ public function sight(){
 }
 
 public function diary(){
+
+        // 3 lignes suivantes à rajouté a chauqe page (sauf login) pour cérifier qu'on est bien loggé (commenté pr désactiver si besoin, ça ne change rien à la var session)
+    $session = $this->request->session();
+    if($session->read('player.Pid') == null){
+        return $this->redirect(['controller' => 'Arenas', 'action' => 'login']);
+    } // 3 lignes précédentes à rajouté a chauqe page (sauf login) pour cérifier qu'on est bien loggé
     
 }
+
+
+}
+
+public function login(){
+
+    $session = $this->request->session();
+    $session->destroy();// on réinitialise la session en entrant sur la page login, pour se reconnecter à nouveau
+
+
+    $Flog = ''; // F si la donné provient d'une Form, DB si la donné provient d'une query
+    $Fpass = '';
+    if(isset($_POST['username'])){
+        $Flog = $_POST['username']; // recupere les valeurs depuis le formulaire dans register.ctp
+    }
+    
+    if(isset($_POST['password'])){
+        $Fpass = $_POST['password'];
+    }
+
+        if (($Flog != '') && ($Fpass != '')) // si les 2 champs sont non vide 
+    {
+        $this->loadModel('Players');
+        if($this->Players->checkCredentials($Flog, $Fpass)){
+            //echo "Bon mot de passe";
+            //echo "<br/> l'id de la session est :";
+            $session->write('player.Pid',$this->Players->getIDfromLog($Flog));
+            //echo $session->read('player.Pid');
+            return $this->redirect(['controller' => 'Arenas', 'action' => 'index']);
+
+
+        }
+        else
+            echo "Mauvais mdp/login";
+    }
+
+    
+
+
+    
+}
+
+public function register(){
+
+    // 3 lignes suivantes à rajouté a chauqe page (sauf login) pour cérifier qu'on est bien loggé (commenté pr désactiver si besoin, ça ne change rien à la var session)
+    $session = $this->request->session();
+    if($session->read('player.Pid') == null){
+        return $this->redirect(['controller' => 'Arenas', 'action' => 'login']);
+    } // 3 lignes précédentes à rajouté a chauqe page (sauf login) pour cérifier qu'on est bien loggé
+
+
+    $session = $this->request->session(); // facultatif, mais ça réduit la taille des lignes suivantes
+
+
+    echo "<br/> l'id de la session est :";
+    echo $session->read('player.Pid');
+    $RandID = substr(md5(rand()), 0, 36); // génère une id random
+    $Flog = ''; // F si la donné provient d'une Form, DB si la donné provient d'une query
+    $Fpass = '';
+    if(isset($_POST['username'])){
+        //echo "post username is set";
+        $Flog = $_POST['username']; // recupere les valeurs depuis le formulaire dans register.ctp
+    }
+    
+    if(isset($_POST['password'])){
+        //echo "post password is set";
+        $Fpass = $_POST['password'];
+    }
+    
+    //echo $RandID;
+    //echo $Flog;
+    //echo $Fpass;
+
+
+    if (($Flog != '') && ($Fpass != '')) // si les 2 champs sont non vide 
+    {
+        $this->loadModel('Players');
+        if(!$this->Players->checkExists($Flog, $Fpass)) // regarde si l'un des champs existe déja
+            $this->Players->insertPlayer($RandID, $Flog, $Fpass); // insere le nouveau péon : voir PlayersTable.php
+    }
+
 
 
 }
