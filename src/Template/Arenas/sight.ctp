@@ -41,41 +41,6 @@ and open the template in the editor.
         }
         
         
-        
-        /*
-         * <table id="table">
-        $fighter=false;
-        // put your code here
-        for ($i=0;$i<$gridHeight;$i++){
-            echo '<tr>';
-            for($j=0;$j<$gridWidth;$j++){
-               
-                echo "<td id='grid' name='$i,$j'>";
-                foreach($posPlayer as $player ){
-                //    if($cle == "coordinate_y" and $player == $i ){
-                //        echo $player; echo "yes";
-                //    } 
-                                        
-                   if ($player["coordinate_x"]==$j && $player["coordinate_y"]==$i){
-                    echo $this->Html->image("perso".$player["id"].".png", ['width'=> '25', 'height'=>'26']);
-                    $fighter = true;
-                   }
-                   
-                }
-                if($fighter==false){// in the case that no one fighter has been find
-                       echo $this->Html->image("herbe.png", ['width'=> '26', 'height'=>'26']);
-                }else{// previously a finghter has been find
-                       $fighter = false;// a fighter has been find
-                       // we have to re-initialised the variable $fighter
-                }
-                   
-                echo '</td>';
-            }
-            echo '</tr>';
-        }
-       
-        */
-        
              ?>
         
         <section id="playGround">
@@ -88,31 +53,35 @@ and open the template in the editor.
 
                 for ($x = 0; $x < 15; $x++) {
                     echo "<td data-x='$x' data-y='$y' class='zone'>";
-                    
-                    foreach($posPlayer as $player ){
+                    $darkground=true;
+                    foreach($gridDisplay as $display ){
                         
-                        if ($player["coordinate_x"]==$x && $player["coordinate_y"]==$y){// ADD THE CONDITION FOR ID=1
-                            echo $this->Html->image("perso".$player["id"].".png", ['width'=> '48', 'height'=>'48']);
-                            $fighter=true;
-                            
-                        }
+                        if ($display["coordinate_x"]==$x && $display["coordinate_y"]==$y){// ADD THE CONDITION FOR ID=1
+                            if($display['type'] == "mainFighter"){
+                                echo $this->Html->image("perso1.png", ['width'=> '60', 'height'=>'60']);
+                                $darkground = false;
+                            }elseif($display['type'] == 'EnemyFighter'){
+                                echo $this->Html->image("perso2.png", ['width'=> '60', 'height'=>'60']);
+                                $darkground = false;
+                            }elseif($display['type'] == 'tool'){
+                                echo $this->Html->image("tool.png", ['width'=> '60', 'height'=>'60']);
+                                $darkground = false;
+                            }elseif($display['type'] =='ground'){
+                                echo $this->Html->image("ground.png", ['width'=> '60', 'height'=>'60']);
+                                $darkground = false;
+                            }
+                        }                       
                     }
-                        
-                    if($fighter==false){// in the case that no one fighter has been find
-                        echo $this->Html->image("herbe.png", ['width'=> '48', 'height'=>'48']);
-                    }else{
-                        $fighter=false;
+                    if($darkground==true){
+                        echo $this->Html->image("darkground.png", ['width'=> '60', 'height'=>'60']);
                     }
-                    }
-                    echo "</td>";
-                
-
-                echo "</tr>";
+                }
+                echo "</td>";
+            echo "</tr>";
             }
                 ?>
             </table>
-        </section>
-        
+        </section>     
              
        
        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
