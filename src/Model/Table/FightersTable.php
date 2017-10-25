@@ -240,6 +240,130 @@ class FightersTable extends Table
         return $fighterPos;
         
     }
+
+        public function UseXP($Pid, $Fid, $action)
+    {
+
+        /* Fonction qui gère l'utilisation de l'xp, un unique appel de cette fonction suffit pour tt les opération/tests 
+        Paramètres :
+        $Pid => l'id du player, normalement récupéré depuis la session
+        $Fid => l'id du Figher actuel , provient également de la session normalement
+        $action => le choix de l'utilisateur : prend les valeur "force" si on choisit de booster la force, "vue" si on choisit de booster la vue, et "PV" pour les points de vie.
+        */
+
+        $XP = 0; // local var pour xp
+        $LVL = 0; // local var pour lvl
+        $Fighter = ''; // local var pour l'id du figter /// AVEC UN F MAJUSCULE !!!
+        $calcul = 0 ; // calcul = xp/4 - lvl, cela correspond au point de caractéristiques disponible a amélioré : 1PC = 1force ou 1vue ou 3PV
+        $strengh = 0; // force actuelle
+        $sight = 0; // vue actuelle
+        $health = 0; // health actuelle
+
+        // récupération de l'xp et du level
+        $get_xp = TableRegistry::get('fighters')->find()
+        ->select(['xp'])
+        ->where(['id =' => $Fid]);
+
+        $get_lvl = TableRegistry::get('fighters')->find()
+        ->select(['level'])
+        ->where(['id =' => $Fid]);
+
+         foreach($get_xp as $gxp){
+            $XP = $gxp['xp']; 
+        }
+
+        foreach($get_lvl as $glvl){
+            $LVL = $glvl['level'];            
+        }
+
+        $calcul = ($XP/4) - $LVL; // calcul de nb de point de caractéristique restant (on gagne 1PC tout les 4 XPs)
+
+        //pr($LVL);
+        //pr($XP);
+
+        //echo "vous avez ";
+        //echo $calcul;
+        //echo " point de caractéristique à dépenser <br/>" ;
+
+        if($calcul >= 1){ // si on a des points disponibles
+
+            echo "On est rentré dans la boucle <br/>";
+
+            $incr_lvl = TableRegistry::get('fighters')->query() // augmente le lvl de 1 
+                ->update()
+                ->set(['level' => $LVL + 1])
+                ->where(['id' => $Fid])
+                ->execute();
+
+            if($action =='force'){
+                //si on a choisit d'augmenter la force
+
+                $get_strengh = TableRegistry::get('fighters')->find() // selection la force actuel pour l'incrémentation
+                ->select(['skill_strengh'])
+                ->where(['id =' => $Fid]);
+
+                 foreach($get_strengh as $temp){
+                    $strengh = $temp['skill_strengh']; 
+                }
+
+                $add_force = TableRegistry::get('fighters')->query() // incrémente la valeur force de 1
+                    ->update()
+                    ->set(['skill_strengh' => $strengh + 1])
+                    ->where(['id' => $Fid])
+                    ->execute();
+            }
+
+
+
+            if($action =='vue'){
+                //si on a choisit d'augmenter la vue
+
+                $get_sight = TableRegistry::get('fighters')->find() // pareil que dessus
+                ->select(['skill_sight'])
+                ->where(['id =' => $Fid]);
+
+                 foreach($get_sight as $temp){
+                    $sight = $temp['skill_sight']; 
+                }
+
+                $add_vue = TableRegistry::get('fighters')->query()
+                    ->update()
+                    ->set(['skill_sight' => $sight + 1])
+                    ->where(['id' => $Fid])
+                    ->execute();
+            }
+
+
+
+            if($action =='PV'){
+                // si on a choisit d'augmenter les PV
+
+                $get_PV = TableRegistry::get('fighters')->find()
+                ->select(['skill_health'])
+                ->where(['id =' => $Fid]);
+
+                 foreach($get_PV as $temp){
+                    $PV = $temp['skill_strengh']; 
+                }
+
+                $add_PV = TableRegistry::get('fighters')->query()
+                    ->update()
+                    ->set(['skill_health' => $PV + 3])
+                    ->where(['id' => $Fid])
+                    ->execute();
+            }
+
+            //echo "<br/> Il vous reste désormais : <br/>";
+            //$calcul = $calcul = ($XP/4) - ($LVL+1);
+            //echo $calcul;
+
+        }
+
+        //echo " <br> on a finit les traitements";
+
+
+    }
+    
 }
     
 
