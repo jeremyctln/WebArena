@@ -1,0 +1,92 @@
+@import url(https://fonts.googleapis.com/css?family=Roboto:400,300,100,700,500);
+
+span
+{
+    float: right;
+}
+.title{
+    margin : 50px;
+    background-image:url("../img/bandeau_home.jpeg");
+    background-repeat: no-repeat;
+
+    height: 400px;
+    padding: 25px;
+}
+h1{
+    color: grey;
+}
+
+
+
+.scroll{
+    height: 500px; 
+    width: 1000px;
+    overflow: scroll;
+    margin: auto;
+    margin-top: 50px;
+    border-style:solid;
+    border-width: 3px;
+    border-color: black;
+    padding: 50px;
+    background-color: #424141;
+    color: white;
+}
+strong{
+    font-size: larger;
+}
+.conteneur{
+
+    display: flex;
+    justify-content: space-around;
+    color: white;
+    margin-top: 100px;
+    background-image: url("../img/footer_img.jpeg");
+    background-repeat: no-repeat;
+    height: 400px;
+    font-size: 22;
+    
+}
+.element{
+    margin-top: 100px;
+}
+body {
+    background:#F7F7F7;
+    color:#666666;
+    font-family: 'Roboto', sans-serif;
+    font-weight:100;
+  }
+body{
+    width: 100%;
+    background: -webkit-linear-gradient(left, #8C9494, #7A8585, #394252, #4C5350);
+    background: linear-gradient(to right, #8C9494, #7A8585, #394252, #4C5350);
+    background-size: 600% 100%;
+    opacity: 0.9;
+    -webkit-animation: HeroBG 20s ease infinite;
+            animation: HeroBG 20s ease infinite;
+  }
+
+
+@-webkit-keyframes HeroBG {
+    0% {
+      background-position: 0 0;
+    }
+    50% {
+      background-position: 100% 0;
+    }
+    100% {
+      background-position: 0 0;
+    }
+  }
+  
+  @keyframes HeroBG {
+    0% {
+      background-position: 0 0;
+    }
+    50% {
+      background-position: 100% 0;
+    }
+    100% {
+      background-position: 0 0;
+    }
+  }
+  
