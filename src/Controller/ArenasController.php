@@ -353,6 +353,50 @@ class ArenasController  extends AppController
 
 
     }
+    
+    public function diary(){
+    $this->loadModel('Events');
+    //$a=$this->events->cancelEvents();
+    $event=$this->Events->takeEvents();
+    $this->set('event',$event);
+    //foreach($event as $ev){
+    //    echo $ev;
+    //
+      
+}
+
+public function fighter(){
+    $this->loadModel('Fighters');
+    $id_player="545f827c-576c-4dc5-ab6d-27c33186dc3e";
+    $name=$this->Fighters->getFightersOfPlayer($id_player);
+    
+    //part where we choose to create a new fighter
+    if($this->request->is('post')){
+            $game = $this->request->getData();
+            
+            if ($game["validationButton"]=="validName") {
+                echo 'valide';
+                $game = $this->request->getData("nameField");
+                pr( $game);
+                
+                
+            $this->Fighters->createFighter($game,$id_player);
+            $this->redirect(array('controller' => 'Arenas', 'action' => 'sight'));
+            }elseif($game['validationButton']!=""){
+            
+                $this->redirect(array('controller' => 'Arenas', 'action' => 'sight'));
+            }
+    }
+    
+    //part where we choose to play with an existant fighter (if they already have been created)
+
+            
+    $fighter=$this->Fighters->getFightersOfPlayer($id_player);
+    $this->set('listCharac',$fighter);
+    
+    
+    
+}
 
 
 }
