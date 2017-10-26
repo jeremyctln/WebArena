@@ -3,44 +3,9 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/wamp64/www/webarena/src/Controller/ArenasController.php</file>
-            <file>file:/C:/wamp64/www/webarena/webroot/img/perso1.png</file>
-            <file>file:/C:/wamp64/www/webarena/webroot/js/sightjs.js</file>
-            <file>file:/C:/wamp64/www/webarena/config/app.default.php</file>
-            <file>file:/C:/wamp64/www/webarena/webroot/js/vendor/jquery.js</file>
-            <file>file:/C:/wamp64/www/webarena/src/Template/Arenas/fighter.ctp</file>
-            <file>file:/C:/wamp64/www/webarena/config/paths.php</file>
-            <file>file:/C:/wamp64/www/webarena/config/routes.php</file>
-            <file>file:/C:/wamp64/www/webarena/src/Controller/AppController.php</file>
-            <file>file:/C:/wamp64/www/webarena/src/Template/Layout/default.ctp</file>
-            <file>file:/C:/wamp64/www/webarena/src/Template/Element/Flash/error.ctp</file>
-            <file>file:/C:/wamp64/www/webarena/src/Template/Arenas/sight.ctp</file>
-            <file>file:/C:/wamp64/www/webarena/webroot/css/cake.css</file>
-            <file>file:/C:/wamp64/www/webarena/src/Controller/ErrorController.php</file>
-            <file>file:/C:/wamp64/www/webarena/src/Model/Table/FightersTable.php</file>
-            <file>file:/C:/wamp64/www/webarena/src/Controller/PagesController.php</file>
-            <file>file:/C:/wamp64/www/webarena/src/Template/Arenas/verif.ctp</file>
-            <file>file:/C:/wamp64/www/webarena/config/app.php</file>
-            <file>file:/C:/wamp64/www/webarena/src/Template/Pages/home.ctp</file>
-            <file>file:/C:/wamp64/www/webarena/src/Template/Arenas/login.ctp</file>
-            <file>file:/C:/wamp64/www/webarena/src/Template/Element/Flash/default.ctp</file>
-            <file>file:/C:/wamp64/www/webarena/src/Model/Table/GridsTable.php</file>
-            <file>file:/C:/wamp64/www/webarena/webroot/css/footer.css</file>
-            <file>file:/C:/wamp64/www/webarena/config/requirements.php</file>
-            <file>file:/C:/wamp64/www/webarena/webroot/css/sight.css</file>
-            <file>file:/C:/wamp64/www/webarena/webroot/css/foundation.min.css</file>
-            <file>file:/C:/wamp64/www/webarena/src/Template/Arenas/header.ctp</file>
-            <file>file:/C:/wamp64/www/webarena/src/Template/Arenas/index.ctp</file>
-            <file>file:/C:/wamp64/www/webarena/webroot/index.php</file>
-            <file>file:/C:/wamp64/www/webarena/webroot/css/foundation.css</file>
-            <file>file:/C:/wamp64/www/webarena/webroot/css/base.css</file>
-            <file>file:/C:/wamp64/www/webarena/webroot/js/vendor/what-input.js</file>
-            <file>file:/C:/wamp64/www/webarena/webroot/js/app.js</file>
-            <file>file:/C:/wamp64/www/webarena/config/bootstrap.php</file>
-            <file>file:/C:/wamp64/www/webarena/src/Model/Table/PlayersTable.php</file>
-            <file>file:/C:/wamp64/www/webarena/src/Application.php</file>
-            <file>file:/C:/wamp64/www/webarena/webroot/css/home.css</file>
-            <file>file:/C:/wamp64/www/webarena/webroot/css/headerSight.css</file>
+            <file>file:/C:/Users/Cécile/Cécile%20Coton/GitHub/WebArena/src/Controller/ArenasController.php</file>
+            <file>file:/C:/Users/Cécile/Cécile%20Coton/GitHub/WebArena/src/View/AjaxView.php</file>
+            <file>file:/C:/Users/Cécile/Cécile%20Coton/GitHub/WebArena/src/View/AppView.php</file>
         </group>
     </open-files>
 </project-private>

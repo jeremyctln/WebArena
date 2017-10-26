@@ -200,8 +200,12 @@ public function sight(){
 }
 
 public function diary(){
-    
-}
-
-
+    $this->loadModel('Events');
+    //$a=$this->events->cancelEvents();
+    $event=$this->Events->takeEvents();
+    $this->set('event',$event);
+    //foreach($event as $ev){
+    //    echo $ev;
+    //
+      
 }
