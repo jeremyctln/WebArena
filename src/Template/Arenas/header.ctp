@@ -10,16 +10,27 @@
     <body>
   
     <?= $this->Html->css('header')?>
-   
+    <?= $this->Html->css('foundation')?>
+    <?= $this->Html->css('foundation.min')?>
     <?= $this->Html->script('js/foundation.min')?>
     <?= $this->Html->script('js/foundation')?>
     <?= $this->Html->script('js/jquery')?>
     <?= $this->Html->script('js/what-input')?>
-    <?= $this->Html->script('js/what-input')?>
-   
+    <?= $this->Html->script('js/header')?>
     <div class="title">
-    <h1>Web Arena <small>Let's play</small><span><?php echo $this->Html->link("Login", array('controller' => 'Arenas','action'=> 'login'), array( 'class' => 'button'))?></span></h1>
+    <h1>Web Arena <small>Let's play</small></h1>
     </div>
+    <nav class="hover-underline-menu" data-menu-underline-from-center>
+  <ul class="menu align-center">
+    <li><a href="login">Login</a></li>
+    <li><a href="register">Register</a></li>
+    <li><a href="fighter">Fighter</a></li>
+    <li><a href="sight">Sight</a></li>
+    <li><a href="diary">Diary</a></li>
+  </ul>
+</nav>
+
+
   
     <div class="scroll"><strong>Game rules</strong></br></br></br>
 • A fighter is in a board arena at a position X, Y. This position can not be outside the
@@ -64,6 +75,14 @@ attacks bill and hits".</br></br>
         <p>Option:</p>
             <ul>
                 <li>Foundation 6</li>
+                <li> Advanced management of the fighters and equipment</li>
+            </ul>
+       </div>
+       <div class="element">
+           <p>Link:</p>
+           <ul>
+               <li>Git: https://github.com/jeremyctln/WebArena/tree/master</li>
+           </ul>
        </div>
     </footer>
     </body>
