@@ -256,11 +256,11 @@ class ArenasController  extends AppController
 
     public function diary(){
 
-            // 3 lignes suivantes à rajouté a chauqe page (sauf login) pour cérifier qu'on est bien loggé (commenté pr désactiver si besoin, ça ne change rien à la var session)
+            // 3 lignes suivantes à rajouté a chaque page (sauf login) pour cérifier qu'on est bien loggé (commenté pr désactiver si besoin, ça ne change rien à la var session)
         $session = $this->request->session();
         if($session->read('player.Pid') == null){
             return $this->redirect(['controller' => 'Arenas', 'action' => 'login']);
-        } // 3 lignes précédentes à rajouté a chauqe page (sauf login) pour cérifier qu'on est bien loggé
+        } // 3 lignes précédentes à rajouté a chaque page (sauf login) pour cérifier qu'on est bien loggé
         
     }
 
@@ -314,7 +314,7 @@ class ArenasController  extends AppController
         } // 3 lignes précédentes à rajouté a chauqe page (sauf login) pour cérifier qu'on est bien loggé
 
 
-        $session = $this->request->session(); // facultatif, mais ça réduit la taille des lignes suivantes
+
 
 
         //echo "<br/> l'id de la session est :";
@@ -322,6 +322,10 @@ class ArenasController  extends AppController
         $RandID = substr(md5(rand()), 0, 36); // génère une id random
         $Flog = ''; // F si la donné provient d'une Form, DB si la donné provient d'une query
         $Fpass = '';
+
+        //echo $this->request->getdata('username');
+
+
         if(isset($_POST['username'])){
             //echo "post username is set";
             $Flog = $_POST['username']; // recupere les valeurs depuis le formulaire dans register.ctp
@@ -331,6 +335,8 @@ class ArenasController  extends AppController
             //echo "post password is set";
             $Fpass = $_POST['password'];
         }
+
+        
         
         //echo $RandID;
         //echo $Flog;
