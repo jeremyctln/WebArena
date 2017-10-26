@@ -17,7 +17,7 @@ public function index()
         return $this->redirect(['controller' => 'Arenas', 'action' => 'login']);
     } // 3 lignes précédentes à rajouté a chauqe page (sauf login) pour cérifier qu'on est bien loggé
 
-    
+
     //$this->set('myname',"julien");
     
     //permet de creer un lien vers le model ou un fichier s'appel Fighters
@@ -317,7 +317,7 @@ public function register(){
     $session = $this->request->session(); // facultatif, mais ça réduit la taille des lignes suivantes
 
 
-    echo "<br/> l'id de la session est :";
+    //echo "<br/> l'id de la session est :";
     echo $session->read('player.Pid');
     $RandID = substr(md5(rand()), 0, 36); // génère une id random
     $Flog = ''; // F si la donné provient d'une Form, DB si la donné provient d'une query
