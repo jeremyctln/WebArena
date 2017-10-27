@@ -67,26 +67,9 @@ class ArenasController  extends AppController
         $this->set('notation',$retour);
         
     }
-    public function fighter(){
-        // 3 lignes suivantes à rajouté a chauqe page (sauf login) pour cérifier qu'on est bien loggé (commenté pr désactiver si besoin, ça ne change rien à la var session)
-        $session = $this->request->session();
-        if($session->read('player.Pid') == null){
-            return $this->redirect(['controller' => 'Arenas', 'action' => 'login']);
-        } // 3 lignes précédentes à rajouté a chauqe page (sauf login) pour cérifier qu'on est bien loggé
-        
-        
-        
-        
-    }
+
 
     public function sight(){
-
-        // 3 lignes suivantes à rajouté a chauqe page (sauf login) pour cérifier qu'on est bien loggé (commenté pr désactiver si besoin, ça ne change rien à la var session)
-        $session = $this->request->session();
-        if($session->read('player.Pid') == null){
-            return $this->redirect(['controller' => 'Arenas', 'action' => 'login']);
-        } // 3 lignes précédentes à rajouté a chauqe page (sauf login) pour cérifier qu'on est bien loggé
-
         
         $this->loadModel('Fighters');
         $this->loadModel('Grids'); 
@@ -112,98 +95,138 @@ class ArenasController  extends AppController
         //demander aussi pour le tableau avec les zone sombre...
         if($this->request->is('post')){
             $game = $this->request->getData();
-
+            $move="";
             //WHEN THE PLAYER WANT TO MOVE
-            if ($game["toucheMove"]== "up"){
-                echo"touche haut";
-
+            if ($game["touche"]== "up"){
                 $direction = 'up';
                 $move = $this->Fighters->fighterMove($idPlayer, $idFighter, $direction);
-
-                //IN THE CASE WE THE VALUE RETURN IS A fighter THAT MEAN
+                
+                //IN THE CASE WHERE THE VALUE RETURNED IS A fighter THAT MEAN
                 // THERE IS A FIGHTER IN THE CASE
                 // ATTACK THE FIGHTER
-
+    
                 if ($move == 'fighter'){
-                    $attack = $this->Fighters->fighterAttack($idPlayer, $idFighter, $direction);            
+                    $attack = $this->Fighters->fighterAttack($idPlayer, $idFighter, $direction);
+                    $this->set('state_information',$attack);
                 }elseif ($move == "tool"){
                     //recuperer le tool à la coordonné donnée!
+                    $tool = $this->Tools->retrieveTool($idFighter, $direction);
+                    $this->set('state_information', $tool);
+                }elseif($move == "You have to stay in the battlefield!"){
+                    $this->set('state_information',$move);
+                }else{
+                    $this->set('state_information',"You move up!");
                 }
-
-                //regader si position de 
-            }elseif ($game["toucheMove"]== "right"){
-                echo"touche right";
+    
+                //regarder si position de 
+            }elseif ($game["touche"]== "right"){
                 $direction = 'right';
                 $move = $this->Fighters->fighterMove($idPlayer, $idFighter, $direction);
-
+    
                 if ($move == 'fighter'){
                     $attack = $this->Fighters->fighterAttack($idPlayer, $idFighter, $direction);            
+                    $this->set('state_information',$attack);                
                 }elseif ($move == "tool"){
-                    //recuperer le tool à la coordonné donnée!
+                    //recuperer le tool à la coordonnée donnée!
+                    $tool = $this->Tools->retrieveTool($idFighter, $direction);
+                    $this->set('state_information', $tool);
+                }elseif($move == "You have to stay in the battlefield!"){
+                    $this->set('state_information',$move);
+                }else{
+                    $this->set('state_information',"You move right!");
                 }
-
-            }elseif ($game["toucheMove"]== "left"){
-                echo"touche left";
+    
+            }elseif ($game["touche"]== "left"){
                 $direction = 'left';
                 $move = $this->Fighters->fighterMove($idPlayer, $idFighter, $direction);
-
+    
                 if ($move == 'fighter'){
-                    $attack = $this->Fighters->fighterAttack($idPlayer, $idFighter, $direction);            
+                    $attack = $this->Fighters->fighterAttack($idPlayer, $idFighter, $direction);
+                    $this->set('state_information',$attack);
                 }elseif ($move == "tool"){
-                    //recuperer le tool à la coordonné donnée!
+                    //récuperer le tool à la coordonnée donnée!
+                    $tool = $this->Tools->retrieveTool($idFighter, $direction);
+                    $this->set('state_information', $tool);
+                }elseif($move == "You have to stay in the battlefield!"){
+                    $this->set('state_information',$move);
+                }else{
+                    $this->set('state_information',"You move left!");
                 }
                 
-            }elseif ($game["toucheMove"]== "down"){
-                echo"touche down";
+            }elseif ($game["touche"]== "down"){
                 $direction = 'down';
                 $move = $this->Fighters->fighterMove($idPlayer, $idFighter, $direction);
-
+    
                 if ($move == 'fighter'){
-                    $attack = $this->Fighters->fighterAttack($idPlayer, $idFighter, $direction);            
+                    $attack = $this->Fighters->fighterAttack($idPlayer, $idFighter, $direction);
+                    $this->set('state_information',$attack);
                 }elseif ($move == "tool"){
-                    //recuperer le tool à la coordonné donnée!
+                    //récuperer le tool à la coordonnée donnée!
+                    $tool = $this->Tools->retrieveTool($idFighter, $direction);
+                    $this->set('state_information', $tool);
+                }elseif($move == "You have to stay in the battlefield!"){
+                    $this->set('state_information',$move);
+                }else{
+                    $this->set('state_information',"You move down!");
                 }
                 
+            }elseif($game["touche"]=="strength"){
+                $skill = "strength";
+                $skillResult = $this->Fighters->ameliorationSkill($idPlayer, $idFighter, $skill);
+                
+            }elseif($game["touche"]=="health"){
+                $skill = "health";
+                $skillResult = $this->Fighters->ameliorationSkill($idPlayer, $idFighter, $skill);
+            }elseif($game["touche"]=="sight"){
+                $skill = "sight";
+                $skillResult = $this->Fighters->ameliorationSkill($idPlayer, $idFighter, $skill);
             }
-
-
-            //ADD THE CASE WHERE THE FIGHTER ATTAQUE AN OTHER FIGHTER
-            // SI ATTAQUE VERS LE HAUT /
-            //CALL THE METHODE ATTAQUE IN THE MODEL; 
-            //
+    
+    
         }
         
-        //$this->loadModel('Players');
-        
-        
-        
-        
-        /*foreach($posPlayer as $pos){
-            $arraygrid = array();
-             if($player["coordinate_x"]==$j && $player["coordinate_y"]==$i){
-                 
-             }
-        }
-        
-         if ($player["coordinate_x"]==$j && $player["coordinate_y"]==$i){
-                        echo $this->Html->image("perso".$player["id"].".png", ['width'=> '25', 'height'=>'26']);
-                        $fighter = true;
-                       }
-                       
-                    }
-                    if($fighter==false){// in the case that no one fighter has been find
-                           echo $this->Html->image("herbe.png", ['width'=> '26', 'height'=>'26']);
-                    }else{// previously a finghter has been find
-                           $fighter = false;// a fighter has been find
-                           // we have to re-initialised the variable $fighter
-                    }*/
-        
-        //echanger l'array de pos Player en une autre array ou l'on pourrait stocker tute les infos dans cette array 
         
         //THE ARRAY THAT WE SEND TO THE LOOP IN THE VIEW
         //MIMPLEMENTATION OF THE VIEW HERE
-        $posPlayer = $this->Grids->getPosFighter();
-        $this->set('posPlayer',$posPlayer);
+        //
+        ///////////////////////////////////////////////////////////////////////
+        //ALL INFORMATION THAT APPEAR IN THE VIEW
+        ///////////////////////////////////////////////////////////////////////
+        //THE FIGHTER'S XP
+        $xpFighter = $this->Fighters->getXP($idFighter, $idPlayer);
+        foreach($xpFighter as $xp){
+            $xpFighter = $xp['xp'];
+        }
+        $this->set('xpFighter',$xpFighter);
+        //THE FIGHTER'S LEVEL
+        $levelFighter = floor($xpFighter/4);
+        $this->set('levelFighter',$levelFighter);
+        
+        //FIGHTER' HEALTH/CURRENT HEALTH
+        $healthFighter = $this->Fighters->getHealth($idFighter, $idPlayer);
+        foreach($healthFighter as $health){
+            $healthFighter = $health['skill_health'];
+        }    
+        $currentFighter = $this->Fighters->getCurrent($idFighter, $idPlayer);
+        foreach($currentFighter as $current){
+            $currentFighter = $current['current_health'];
+        }
+        $this->set('healthFighter', $healthFighter);
+        $this->set('currentHealth',$currentFighter);
+        
+        //FIGHTER'S STRENGTH
+        $strengthFighter = $this->Fighters->getStrength($idFighter, $idPlayer);
+        foreach($strengthFighter as $strength){
+            $strengthFighter = $strength['skill_strength'];
+        }
+        $this->set('strengthFighter', $strengthFighter);
+        
+        //FIGHTER'S SIGHT
+        $sightFighter = $this->Fighters->getSight($idFighter, $idPlayer);
+        foreach($sightFighter as $sight){
+            $sightFighter = $sight['skill_sight'];
+        }
+        $this->set('sightFighter', $sightFighter);
         
         //SEND WIDTH AND THE HIGHT OF THE GRID
         $gridWidth = $this->Grids->getWidth();
@@ -211,59 +234,30 @@ class ArenasController  extends AppController
         $this->set('gridWidth', $gridWidth);
         $this->set('gridHeight', $gridHeight);
         
+        //TO DISPLAY THE TOOL LIST OF THE FIHGTER
+        $toolList = $this->Tools->getToolsFighter($idFighter, $idPlayer);
+        $this->set('toolList', $toolList);
         
+        //TO DISPLAY THE NUMBER OF SKILL POINT
+        $skillPoint = $this->Fighters->getSkillPoints($idFighter, $idPlayer);
+        $this->set('skillPoint', $skillPoint);
+        
+        
+        /////////////////////////////////////////////////////////////////////////
+        //INFORMATION TO DISPLAY THE GRID
+        /////////////////////////////////////////////////////////////////////////
         $posMainFighter = $this->Fighters->getMainFighter($idFighter, $idPlayer);
         $posEnemyFighter = $this->Fighters->getEnemyFighter($idFighter, $idPlayer);
         $posTools = $this->Tools->getTools();
         $this->Surroundings->setSurroundings($posMainFighter, $posEnemyFighter, $posTools);
         $gridDisplay = $this->Surroundings->getSurroundings();
         $this->set('gridDisplay', $gridDisplay);
-        //envoie des info ici à la vue
-       
-       
-        
-        //$perso = $this->Grid->getPosFighter();
-        
-            
-            //on doit lui passer le fighter
-       
-        //$user = $this->player->get($user);
-        
-        
-        
-        /*
-        $this->loadModel('Grids');
-        $line = $this->Grids->getWidth();
-        $column =$this->Grids->getHeight();
-        
-        for($i=0;$i<$line;$i++){
-            for($j=0;$j<$column;$j++){
-                $PosX = $this->Grids->getPosXFighter();
-                $PosY = $this->Grids->getPosYFighter();
-                if ($i==$PosY && $j==$PosX){
-                    return 
-                }
-            
-            }
-        }
-         
-         */
-        
-        //exemple d'affichage de la grille
+        //envoie des infos ici à la vue
+      
         
         
     }
-
-    public function diary(){
-
-            // 3 lignes suivantes à rajouté a chaque page (sauf login) pour cérifier qu'on est bien loggé (commenté pr désactiver si besoin, ça ne change rien à la var session)
-        $session = $this->request->session();
-        if($session->read('player.Pid') == null){
-            return $this->redirect(['controller' => 'Arenas', 'action' => 'login']);
-        } // 3 lignes précédentes à rajouté a chaque page (sauf login) pour cérifier qu'on est bien loggé
-        
-    }
-
+    
 
 
 
@@ -353,8 +347,15 @@ class ArenasController  extends AppController
 
 
     }
+
+
+public function diary(){
+    // 3 lignes suivantes à rajouté a chaque page (sauf login) pour cérifier qu'on est bien loggé (commenté pr désactiver si besoin, ça ne change rien à la var session)
+    $session = $this->request->session();
+    if($session->read('player.Pid') == null){
+        return $this->redirect(['controller' => 'Arenas', 'action' => 'login']);
+    } // 3 lignes précédentes à rajouté a chaque page (sauf login) pour cérifier qu'on est bien loggé
     
-    public function diary(){
     $this->loadModel('Events');
     //$a=$this->events->cancelEvents();
     $event=$this->Events->takeEvents();
@@ -366,8 +367,15 @@ class ArenasController  extends AppController
 }
 
 public function fighter(){
+
+    // 3 lignes suivantes à rajouté a chauqe page (sauf login) pour cérifier qu'on est bien loggé (commenté pr désactiver si besoin, ça ne change rien à la var session)
+    $session = $this->request->session();
+    if($session->read('player.Pid') == null){
+        return $this->redirect(['controller' => 'Arenas', 'action' => 'login']);
+    } // 3 lignes précédentes à rajouté a chauqe page (sauf login) pour cérifier qu'on est bien loggé
+  
     $this->loadModel('Fighters');
-    $id_player="545f827c-576c-4dc5-ab6d-27c33186dc3e";
+    $id_player=$session->read('player.Pid');
     $name=$this->Fighters->getFightersOfPlayer($id_player);
     
     //part where we choose to create a new fighter

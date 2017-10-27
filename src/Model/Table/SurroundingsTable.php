@@ -37,27 +37,35 @@ class SurroundingsTable extends Table {
         for($y=($posY-$sight);$y<=($posY+$sight);$y++){
             for($x=($posX-$sight);$x<=($posX+$sight);$x++){
                 //IN THE CASE OF A ENEMY
+                
                 $nothing=true;
-                foreach ($posEnemyFighter as $enemyPos){
-                    if($x == $enemyPos['coordinate_x'] && $y == $enemyPos['coordinate_y']){
-                        $query->query()->insert(['type', 'coordinate_x', 'coordinate_y'])->values(['type' => "EnemyFighter", 'coordinate_x' => $enemyPos['coordinate_x'], 'coordinate_y' => $enemyPos['coordinate_y'] ])->execute();
-                        $nothing=false;                        
-                    }   
-                }
-                foreach ($posTools as $tools){
-                    if($x == $tools['coordinate_x'] && $y == $tools['coordinate_y']){
-                        $query->query()->insert(['type', 'coordinate_x', 'coordinate_y'])->values(['type' => "tool", 'coordinate_x' => $tools['coordinate_x'], 'coordinate_y' => $tools['coordinate_y'] ])->execute();
-                        $nothing=false;                        
-                    } 
-                }
-                if($nothing==true){
-                    if($posX !=$x || $posY != $y){
-                        $query->query()->insert(['type', 'coordinate_x', 'coordinate_y'])->values(['type' => "ground", 'coordinate_x' => $x, 'coordinate_y' => $y])->execute();
-                    }
+                if(($x-$posX)+($y-$posY) <= $sight && ($x-$posX)-($y-$posY) <= $sight && -($x-$posX)+($y-$posY) <= $sight && -($x-$posX)-($y-$posY) <= $sight){
                     
-                }               
+                    
+                    foreach ($posEnemyFighter as $enemyPos){
+                        if($x == $enemyPos['coordinate_x'] && $y == $enemyPos['coordinate_y']){
+                            $query->query()->insert(['type', 'coordinate_x', 'coordinate_y'])->values(['type' => "EnemyFighter", 'coordinate_x' => $enemyPos['coordinate_x'], 'coordinate_y' => $enemyPos['coordinate_y'] ])->execute();
+                            $nothing=false;                        
+                        }   
+                    }
+                    foreach ($posTools as $tools){
+                        if($x == $tools['coordinate_x'] && $y == $tools['coordinate_y']){
+                            $query->query()->insert(['type', 'coordinate_x', 'coordinate_y'])->values(['type' => "tool", 'coordinate_x' => $tools['coordinate_x'], 'coordinate_y' => $tools['coordinate_y'] ])->execute();
+                            $nothing=false;                        
+                        } 
+                    }
+                    if($nothing==true){
+                        if($posX !=$x || $posY != $y){
+                            $query->query()->insert(['type', 'coordinate_x', 'coordinate_y'])->values(['type' => "ground", 'coordinate_x' => $x, 'coordinate_y' => $y])->execute();
+                        }
+                    }
+                }
+                               
             }
         }
+        
+       
+       
             
     }
     
@@ -65,7 +73,6 @@ class SurroundingsTable extends Table {
         $query= TableRegistry::get('surroundings')->find();
         return $query;
     }
-    
     
     //put your code here
 }

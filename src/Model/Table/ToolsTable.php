@@ -34,7 +34,7 @@ class ToolsTable extends Table{
             for($i=0; $i<10; $i++){
                   
                 $aleaCoordinateX = rand (0,14);
-                $aleaCoordinateY = rand (0,14);
+                $aleaCoordinateY = rand (0,9);
                 
                 //SUPPRESSION DANS LA TABKE SI ELEMENT EXISTE DEJA
                               
@@ -65,7 +65,7 @@ class ToolsTable extends Table{
                         //ALEA 
                         $typeTool = rand(1,3);
                         if ($typeTool == 1){
-                            $typeTool = "strenght";
+                            $typeTool = "strength";
                         }elseif($typeTool == 2){
                             $typeTool = "health";
                         }else{
@@ -78,7 +78,7 @@ class ToolsTable extends Table{
                         
                     }else{
                         
-                        $aleaCoordinateX = rand (0,14);
+                        $aleaCoordinateX = rand (0,9);
                         $aleaCoordinateY = rand (0,14);
                         
                     } 
@@ -100,8 +100,55 @@ class ToolsTable extends Table{
         return $query; 
     }
     
+    public function getToolsFighter($idFighter, $idPlayer){
+        $query = TableRegistry::get('tools')->find()->where(['fighter_id' => $idFighter]);
+        return $query;
+    }
     
-    
-    
+    public function retrieveTool($idFighter,$direction){
+        
+        $queryTools = TableRegistry::get('tools');
+        $queryFighters = TableRegistry::get('fighters');
+        
+       //INFO ABOUT THE FIGHTER THAT WE ARE USING
+        $mainFighter = $queryFighters->find()->where(['id' => $idFighter]);
+        
+        //INFO ABOUT THE FIGHTER THAT WE ARE USING
+        $toolList = $queryTools->find();
+        
+        foreach($mainFighter as $fighter){
+       
+            //WE WANT TO KNOW WICH TOOL WILL BE ASSIGN TO THE MAIN FIGHTER
+            if ($direction == "up"){
+                $toolAssign = $queryTools->find()->where(['coordinate_x' => $fighter['coordinate_x'], 'coordinate_y' => $fighter['coordinate_y']-1]);
+            }elseif($direction == "right"){
+                $toolAssign = $queryTools->find()->where(['coordinate_y' => $fighter['coordinate_y'], 'coordinate_x' => $fighter['coordinate_x']+1]);
+            }elseif($direction == "left"){
+                $toolAssign = $queryTools->find()->where(['coordinate_y' => $fighter['coordinate_y'], 'coordinate_x' => $fighter['coordinate_x']-1]);
+            }elseif($direction == "down"){
+                $toolAssign = $queryTools->find()->where(['coordinate_x' => $fighter['coordinate_x'], 'coordinate_y' => $fighter['coordinate_y']+1]);
+            }
+            
+            //RECUPERATION DE L'ATTRIBUT SUPP
+            foreach($toolAssign as $toolA){
+                if($toolA['type'] == "strength"){
+                    $queryFighters->find()->update()->set(['skill_strength' => $fighter['skill_strength']+$toolA['bonus']])->where(['id' => $idFighter])->execute();
+                }elseif($toolA['type'] == "sight"){
+                    $queryFighters->find()->update()->set(['skill_sight' => $fighter['skill_sight']+$toolA['bonus']])->where(['id' => $idFighter])->execute();
+                }elseif($toolA['type'] == "health"){
+                    $queryFighters->find()->update()->set(['skill_health' => $fighter['skill_health']+$toolA['bonus'], 'current_health' => $fighter['current_health']+$toolA['bonus']])->where(['id' => $idFighter])->execute();
+                }
+            //ASSIGN THE TOOL TO THE FIGHTER
+            $queryTools->find()->update()->set(['fighter_id' => $idFighter])->where(['coordinate_x' => $toolA['coordinate_x'], 'coordinate_y' => $toolA['coordinate_y']])->execute();
+        
+            return "You have a new tool, your ".$toolA['type']."increase of ".$toolA['bonus'];
+            }
+            
+        }
+        
+        //ASSIGN TO THE TOOL THE ID OF THE FIGHTER
+          
+            
+    }
     
 }

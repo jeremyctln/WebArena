@@ -65,7 +65,7 @@ attacks bill and hits".</br></br>
         <div class="element">
         <p>Developper :</p>
     <ul>
-     <li>Jeremy Catelin</li>
+     <li>Jeremy Catelain</li>
      <li>Cécile Coton</li>
      <li>Etienne Hensgen</li>
      <li>Stanislas Pinto</li>
