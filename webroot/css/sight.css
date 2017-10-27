@@ -9,6 +9,8 @@ and open the template in the editor.
 */
 
 #playGround {
+    margin: 10px;
+    margin-left: 30px;
     
 }
 
@@ -21,15 +23,9 @@ and open the template in the editor.
     width: 48px;
     height:48px;
     
-
-    border     : 1px dashed rgb(32, 97, 64);
+    padding: 0;
 
     cursor     : pointer;
-}
-
-.zone {
-    width: 48px;
-    height:48px;
 }
 
 .fighter {
@@ -38,4 +34,129 @@ and open the template in the editor.
     display    : inline-block;
     position   : absolute;
     margin-top : -8px;
+}
+table{
+    width:300px;
+}
+
+.form_direction{
+    border-bottom: navajowhite; 
+    border: solid 1px red; 
+}
+.classUp{
+    background-image: url('../img/button.png');
+    background-repeat: no-repeat;
+    background-position:center center;
+    width: 220px;
+    height: 80px;
+    color: white;
+    cursor     : pointer;
+}
+.classUp:hover{
+    background-image: url('../img/buttonhover.png');
+}
+.classRight{
+    background-image: url('../img/button.png');
+    background-repeat: no-repeat;
+    background-position:center center;
+    width: 220px;
+    height: 80px;
+    color: white;
+    cursor     : pointer;
+}
+.classRight:hover{
+    background-image: url('../img/buttonhover.png');
+}
+.classLeft{
+    background-image: url('../img/button.png');
+    background-repeat: no-repeat;
+    background-position:center center;
+    width: 220px;
+    height: 80px;
+    color: white;
+    cursor     : pointer;
+}
+.classLeft:hover{
+    background-image: url('../img/buttonhover.png');
+}
+.classDown{
+    background-image: url('../img/button.png');
+    background-repeat: no-repeat;
+    background-position:center center;
+    width: 220px;
+    height: 80px;
+    color: white;
+    cursor     : pointer;
+    margin-bottom: 20px;
+}
+.classDown:hover{
+    background-image: url('../img/buttonhover.png');
+}
+/*POSITION OF THE BUTTON UP*/
+#buttonUp{
+    margin: auto;
+    width: 220px;
+}
+/*POSITION OF THE BUTTON RIGHT AND LEFT*/
+#buttonLeftRight{
+    margin: auto;
+    width: 440px;
+}
+/*POSITION OF THE BUTTON DOWN*/
+#buttonDown{
+    margin: auto;
+    width: 220px;
+}
+
+
+/*BUTTONS SKILLS*/
+.classStrength{
+    margin: 5px;
+    background-image: url('../img/skillbutton.jpg');
+    background-repeat: no-repeat;
+    background-position:center center;
+    width: 170px;
+    height: 52px;
+    color: white;
+    cursor     : pointer;
+}
+.classStrength:hover{
+    background-image: url('../img/skillbutton2.jpg');
+}
+.classHealth{
+    margin: 5px;
+    background-image: url('../img/skillbutton.jpg');
+    background-repeat: no-repeat;
+    background-position:center center;
+    width: 170px;
+    height: 52px;
+    color: white;
+    cursor     : pointer;
+}
+.classHealth:hover{
+    background-image: url('../img/skillbutton2.jpg');
+}
+.classSight{
+    margin: 5px;
+    background-image: url('../img/skillbutton.jpg');
+    background-repeat: no-repeat;
+    background-position:center center;
+    width: 170px;
+    height: 52px;
+    color: white;
+    cursor     : pointer;
+}
+.classSight:hover{
+    background-image: url('../img/skillbutton2.jpg');
+}
+#buttonsSill{
+    margin: auto;
+    width: 170px;
+}
+
+#infoFighter{
+    background-image: url('../img/backgroundskills.jpg');
+    
+    color: white;
+}
 }
