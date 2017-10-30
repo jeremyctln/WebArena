@@ -88,6 +88,42 @@ class PlayersTable extends Table
 
 
      }
+
+     public function ResetLostPWD($Flog)
+     {
+
+        $exist = false;
+
+        $check_log = TableRegistry::get('players')->find()
+        ->select(['id'])
+        ->where(['email =' => $Flog]);
+
+        foreach($check_log as $l){
+            if ($l['id']){
+                $exist = true;    
+            }
+        }
+
+        if($exist == true)
+        {
+            $new_pass = substr(md5(rand()), 0, 10);
+            //$hashPWD = password_hash($new_pass, PASSWORD_BCRYPT);
+
+            $reset_pwd = TableRegistry::get('players')->query() // augmente le lvl de 1 
+            ->update()
+            ->set(['password' => $new_pass])
+            ->where(['email' => $Flog])
+            ->execute();
+
+            return $new_pass;
+
+        }
+        else
+            return "";
+
+
+        
+     }
 }
 /* 
  * To change this license header, choose License Headers in Project Properties.

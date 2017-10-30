@@ -273,40 +273,62 @@ class ArenasController  extends AppController
     }
 
 
-
     public function login(){
 
         $session = $this->request->session();
         $session->destroy();// on réinitialise la session en entrant sur la page login, pour se reconnecter à nouveau
 
-
+        $this->loadModel('Players');
         $Flog = ''; // F si la donné provient d'une Form, DB si la donné provient d'une query
         $Fpass = '';
-        if(isset($_POST['username'])){
-            $Flog = $_POST['username']; // recupere les valeurs depuis le formulaire dans register.ctp
-        }
-        
-        if(isset($_POST['password'])){
-            $Fpass = $_POST['password'];
-        }
 
-            if (($Flog != '') && ($Fpass != '')) // si les 2 champs sont non vide 
+        $Flog = $this->request->getData('username');
+        $Fpass = $this->request->getData('password');
+        $this->set('message',"");
+
+
+        if($this->request->is('post'))
         {
-            $this->loadModel('Players');
-            if($this->Players->checkCredentials($Flog, $Fpass)){
-                //echo "Bon mot de passe";
-                //echo "<br/> l'id de la session est :";
-                $session->write('player.Pid',$this->Players->getIDfromLog($Flog));
-                //echo $session->read('player.Pid');
-                return $this->redirect(['controller' => 'Arenas', 'action' => 'index']);
 
+            $data = $this->request->getData();
+            if($data['login'] == 'oubli'){
 
+                if($Flog != ''){
+                    $temp = $this->Players->ResetlostPWD($Flog);
+                    if( $temp == ""){
+                        $this->set('message', "Nous n'avons pas pu identifier votre Email, veuillez rentrer un email valide svp");
+                    }
+                    else{
+                        $this->set('message', "Un nouveau Mdp pour le compte ". $Flog ." a été généré. Le nouveau Mdp est : " .$temp);
+                    }
+                }
+                
+                else{
+                    $this->set('message', "Veuillez remplir l'email du compte dont vous avez perdu le mot de passe svp");
+                }
             }
-            else
-                echo "Mauvais mdp/login";
-        }
 
-        
+            if($data['login'] == 'register'){
+                return $this->redirect(['controller' => 'Arenas', 'action' => 'register']);
+            }
+
+            if($data['login'] == 'connection')
+            {
+                if (($Flog != '') && ($Fpass != '')) // si les 2 champs sont non vide 
+                {
+                    if($this->Players->checkCredentials($Flog, $Fpass)){
+                        $session->write('player.Pid',$this->Players->getIDfromLog($Flog));
+                        echo $session->read('player.Pid');
+                        return $this->redirect(['controller' => 'Arenas', 'action' => 'fighter']);
+                    }
+                    else
+                        $this->set('message', "Mauvais login/Mdp");
+                }
+                else
+                 $this->set('message',"Veuillez remplir les deux champs svp");
+            }
+        }
+     
 
 
         
@@ -314,52 +336,101 @@ class ArenasController  extends AppController
 
     public function register(){
 
-        // 3 lignes suivantes à rajouté a chauqe page (sauf login) pour cérifier qu'on est bien loggé (commenté pr désactiver si besoin, ça ne change rien à la var session)
+        // PAS BESOIN D'ETRE CONNECTE POUR ACCEDER A CETTE PAGE !!!
+     
+        $session = $this->request->session();
+
+        $RandID = substr(md5(rand()), 0, 36); // génère une id random
+        $Flog = '1'; // F si la donné provient d'une Form, DB si la donné provient d'une query
+        $Fpass = '2';
+
+        $Flog = $this->request->getData('username');
+        $Fpass = $this->request->getData('password');
+        $this->set('message',"");
+
+
+        $data = $this->request->getData();
+        if($this->request->is('post'))
+        {
+           if($data['action'] == 'ajout'){
+
+               if (($Flog != '') && ($Fpass != '')) // si les 2 champs sont non vide 
+               { 
+                   $this->loadModel('Players');
+                   if(!$this->Players->checkExists($Flog, $Fpass)){// regarde si l'un des champs existe déja
+                       $this->Players->insertPlayer($RandID, $Flog, $Fpass); // insere le nouveau péon : voir PlayersTable.php
+                       $this->set('message',"Le compte a été ajouté avec succès !");
+                   } 
+                   else{
+                       $this->set('message', "Ce compte existe déjà");
+                   }
+              
+               }
+               else
+                $this->set('message',"Veuillez remplir les deux champs svp");
+           
+           }
+           if($data['action'] == 'retour'){
+           return $this->redirect(['controller' => 'Arenas', 'action' => 'login']);
+           } 
+        }
+
+    }
+
+    public function guild(){
+        // 3 lignes suivantes à rajouté a chauqe page (sauf login) pour cértifier qu'on est bien loggé
         $session = $this->request->session();
         if($session->read('player.Pid') == null){
             return $this->redirect(['controller' => 'Arenas', 'action' => 'login']);
-        } // 3 lignes précédentes à rajouté a chauqe page (sauf login) pour cérifier qu'on est bien loggé
+        } // 3 lignes précédentes à rajouté a chauqe page (sauf login) pour cértifier qu'on est bien loggé
+
+        $Fid = 1;
+        $error = '';
 
 
+        $this->loadModel('Guild');
+
+        //$this->Guild->AddMessage(1,"msg ajouté depuis un formulaire quelquonque",1);
+
+        $guild_id = $this->Guild->GetGuildID($Fid);
 
 
-
-        //echo "<br/> l'id de la session est :";
-        echo $session->read('player.Pid');
-        $RandID = substr(md5(rand()), 0, 36); // génère une id random
-        $Flog = ''; // F si la donné provient d'une Form, DB si la donné provient d'une query
-        $Fpass = '';
-
-        //echo $this->request->getdata('username');
+        $content = $this->request->getData('Content');
+        $joindre = $this->request->getData('joindre');
+        $newname = $this->request->getData('Nouveau');
 
 
-        if(isset($_POST['username'])){
-            //echo "post username is set";
-            $Flog = $_POST['username']; // recupere les valeurs depuis le formulaire dans register.ctp
-        }
-        
-        if(isset($_POST['password'])){
-            //echo "post password is set";
-            $Fpass = $_POST['password'];
-        }
-
-        
-        
-        //echo $RandID;
-        //echo $Flog;
-        //echo $Fpass;
-
-
-        if (($Flog != '') && ($Fpass != '')) // si les 2 champs sont non vide 
+        $data = $this->request->getData();
+        if($this->request->is('post'))
         {
-            $this->loadModel('Players');
-            if(!$this->Players->checkExists($Flog, $Fpass)) // regarde si l'un des champs existe déja
-                $this->Players->insertPlayer($RandID, $Flog, $Fpass); // insere le nouveau péon : voir PlayersTable.php
+            if($data['guild'] == 'Envoyer')
+            {
+                $this->Guild->AddMessage($Fid,$content,$guild_id);
+            }
+        
+            if($data['guild'] == 'Rejoindre')
+            {
+                
+                $error = $this->Guild->JoinGuild($joindre, $Fid);
+                if($error == ''){
+                    $special = -1;
+                    $this->Guild->AddMessage($Fid,$joindre,$special);
+                    return $this->redirect(['controller' => 'Arenas', 'action' => 'guild']);
+                }
+
+            }
+
+             if($data['guild'] == 'Creer')
+             {
+                 $this->Guild->CreateGuild($newname);
+             }
         }
 
-
-
+        $this->set('error',$error);
+        $this->set('GuildName', $this->Guild->GetGuildName($guild_id));
+        $this->set('MsgContent', $this->Guild->GetGuildMSG($guild_id));
     }
+
 
 
 public function diary(){

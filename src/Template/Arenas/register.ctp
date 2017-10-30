@@ -21,11 +21,14 @@
     </div>
     <?= $this->Form->create('post') ?>
   <div class="sign-in-form">
-    <h4 class="text-center">REGISTER</h4>
-    
+    <div>
+      <?php echo $message  ?> 
+    </div>
+    <h4 class="text-center">REGISTER</h4> 
     <?= $this->Form->control('username',['name'=>'username','class'=>'sign-in-form-username']) ?> 
     <?= $this->Form->control('password',['name'=>'password','class'=>'sign-in-form-password']) ?></br>
-    <?= $this->Form->button('Ajouter',['class'=>'sign-in-form-button']); ?>
+    <?= $this->Form->button('Ajouter le compte', ['value'=>'ajout','name'=>'action','class'=>'sign-in-form-button']); ?>
+    <?= $this->Form->button('Retour', ['value'=>'retour','name'=>'action','class'=>'sign-in-form-button']); ?>
   </div>
   <footer class="conteneur">
         <div class="element">

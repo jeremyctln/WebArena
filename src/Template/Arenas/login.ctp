@@ -23,6 +23,9 @@
     
     <?= $this->Form->create('post') ?>
     <div class="sign-in-form">
+      <div>
+        <?php echo $message  ?> 
+      </div>
     <h4 class="text-center">LOGIN</h4>
     <?= $this->Form->control('username', ['value'=>'','name'=>'username','class'=>'sign-in-form-username']) ?>
     <?= $this->Form->control('password', ['value'=>'','name'=>'password','class'=>'sign-in-form-password']) ?></br>
