@@ -27,6 +27,7 @@ class GuildTable extends Table
 
     public function GetGuildID($Fid)
     {
+        $guild_id = '';
         $guild = TableRegistry::get('fighters')->find()
         ->select(['guild_id'])
         ->where(['id =' => $Fid]);
