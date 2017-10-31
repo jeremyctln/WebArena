@@ -384,8 +384,10 @@ class ArenasController  extends AppController
             return $this->redirect(['controller' => 'Arenas', 'action' => 'login']);
         } // 3 lignes précédentes à rajouté a chauqe page (sauf login) pour cértifier qu'on est bien loggé
 
-        $Fid = 1;
+        $Fid = 2;
         $error = '';
+
+        $Fid = $session->read('player.Fid');
 
 
         $this->loadModel('Guild');
@@ -466,17 +468,24 @@ public function fighter(){
     if($this->request->is('post')){
             $game = $this->request->getData();
             
-            if ($game["validationButton"]=="validName") {
+            if ($game["ValidationButton"]=="validName") {
                 echo 'valide';
                 $game = $this->request->getData("nameField");
                 pr( $game);
                 
                 
             $this->Fighters->createFighter($game,$id_player);
-            $this->redirect(array('controller' => 'Arenas', 'action' => 'sight'));
-            }elseif($game['validationButton']!=""){
+            //$this->redirect(array('controller' => 'Arenas', 'action' => 'sight'));
+            }if($game['ValidationButton']!=""){
             
-                $this->redirect(array('controller' => 'Arenas', 'action' => 'sight'));
+                //$this->redirect(array('controller' => 'Arenas', 'action' => 'sight'));
+            }
+
+            if($game['ValidationButton'] == 'choisir'){
+                $choix = $this->request->getData('field');
+                $session->write('player.Fid',$this->Fighters->getIDfromName($choix));
+                return $this->redirect(array('controller' => 'Arenas', 'action' => 'guild'));
+
             }
     }
     

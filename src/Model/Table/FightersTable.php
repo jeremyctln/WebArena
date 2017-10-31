@@ -360,6 +360,16 @@ class FightersTable extends Table
         $fighterInfo = $query->find()->select(['id', 'name','level','skill_sight','skill_strength','skill_health','current_health'])->where(['player_id'=>$id_player]);
         return $fighterInfo;
     }
+
+    public function GetIDFromName($name)
+    {
+        $get_id = TableRegistry::get('fighters')->find()
+        ->select(['id'])
+        ->where(['name'=>$name]);
+        foreach ($get_id as $n) {
+            return $n['id'];
+        }
+    }
     
 }
     

@@ -20,7 +20,8 @@ class EventsTable extends Table
     //quand on se connecte, avant d'afficher tous les évènements, supprime les évènements qui ont eu lieu il y a plus de 24h
     public function cancelEvents() {
         $query2 = TableRegistry::get('events')->find();
-        $query2->delete('events', ['date <' => DateTime('now')])->execute();
+
+        $query2->delete('events', ['date <' => date("Y-m-j H:i:s", mktime(date("H"), date("i"), date("s"), date("m"), date("d") - 1, date("Y")))])->execute();
         
     }
     
