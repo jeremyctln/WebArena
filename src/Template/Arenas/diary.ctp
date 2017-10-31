@@ -27,7 +27,7 @@
             }?>
         </table>
         
-        <?= $this->Html->link("go to the game",["controller"=>"Arenas","action"=>"fighter"]);?>
+        <?= $this->Html->link("continue",["controller"=>"Arenas","action"=>"fighter"]);?>
         
     </body>
    
