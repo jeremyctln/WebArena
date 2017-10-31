@@ -89,10 +89,7 @@ class ToolsTable extends Table{
         return true;
                
     }
-    /*
-            foreach ($query as $s){
-            echo $s;
-        }*/
+
 
     //RECOVER TOOLS
     public function getTools(){    

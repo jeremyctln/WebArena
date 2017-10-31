@@ -56,16 +56,7 @@ class FightersTable extends Table
             
         }
     }
-    
-    public function getFighterName($fighterID){
-        
-        $query = TableRegistry::get('fighters')->find();
-        $name=$query->select(['name'])->where(['id =' => $fighterID ]);
-        
-        return debug($name);
-    }
-    
-    
+
 
     public function fighterAttack($idPlayer, $idFighter, $direction){
         $query = TableRegistry::get('fighters');
@@ -135,11 +126,12 @@ class FightersTable extends Table
                             // IF NOT THE CASE THE FIGHTER WIN A LEVEL
                             if($levelFighter != $actualLevel){//AMELIORATION IS THE LEVEL INCREASE
                                 //$query->find()->update()->set(['level' => $actualLevel])->where(['id' => $fighterI['id']])->execute();
+                                /*
                                 $query->find()->update()->set(['skill_sight' => $fighterI['skill_sight']+1])->where(['id' => $fighterI['id']])->execute();
                                 $query->find()->update()->set(['skill_strength' => $fighterI['skill_strength']+1])->where(['id' => $fighterI['id']])->execute();
-                                $query->find()->update()->set(['skill_health' => $fighterI['skill_health']+3])->where(['id' => $fighterI['id']])->execute();
+                                $query->find()->update()->set(['skill_health' => $fighterI['skill_health']+3])->where(['id' => $fighterI['id']])->execute();*/
                                 //INCREASE THE LIFE OF THE FIGHTER TO THE MAXIMUM
-                                $query->find()->update()->set(['current_health' => $fighterI['skill_health']+3 ])->where(['id' => $fighterI['id']])->execute();
+                                $query->find()->update()->set(['current_health' => $fighterI['skill_health'] ])->where(['id' => $fighterI['id']])->execute();
                             }
 
                         }
@@ -188,106 +180,107 @@ class FightersTable extends Table
             
 
                       
-        // WHEN THE PLAYER WANT TO MOVE THE FIGHTERS
-        public function fighterMove($idPlayer, $idFighter, $direction){
-            $query = TableRegistry::get('fighters');
-            $query2 = TableRegistry::get('tools');
+                      
+    // WHEN THE PLAYER WANT TO MOVE THE FIGHTERS
+    public function fighterMove($idPlayer, $idFighter, $direction){
+        $query = TableRegistry::get('fighters');
+        $query2 = TableRegistry::get('tools');
+        
+        //INFO ABOUT THE FIGHTER 
+        $fighterPos = $query->find()->select(['id','coordinate_x' ,'coordinate_y'])->where(['id =' => $idFighter ]);
+        
+        //LIST OF ALL FIGHTER
+        $fighterList = $query->find()->select(['id', 'player_id', 'coordinate_x', 'coordinate_y']);
+        
+        //LIST OF TOOLS WITH ID FIGHTER NULL
+        $toolList = $query2->find()->where(['fighter_id IS' => null] );
             
-            //INFO ABOUT THE FIGHTER 
-            $fighterPos = $query->find()->select(['id','coordinate_x' ,'coordinate_y'])->where(['id =' => $idFighter ]);
+        foreach($fighterList as $fighterL){
             
-            //LIST OF ALL FIGHTER
-            $fighterList = $query->find()->select(['id', 'player_id', 'coordinate_x', 'coordinate_y']);
-            
-            //LIST OF TOOLS WITH ID FIGHTER NULL
-            $toolList = $query2->find()->where(['fighter_id IS' => null] );
-              
-            foreach($fighterList as $fighterL){
+            foreach ($fighterPos as $fighterP){
                 
-                foreach ($fighterPos as $fighterP){
-                    
-                    foreach ($toolList as $tool){
-                    
-                        if($direction == "up" ){
-    
-                            if($fighterP['coordinate_y']-1 == $fighterL['coordinate_y'] && $fighterP['coordinate_x'] == $fighterL['coordinate_x']){
-                                return "fighter";
-                            }elseif($fighterP['coordinate_y']-1 == $tool['coordinate_y'] && $fighterP['coordinate_x'] == $tool['coordinate_x']){
-                                return "tool";
+                foreach ($toolList as $tool){
+                
+                    if($direction == "up" ){
+
+                        if($fighterP['coordinate_y']-1 == $fighterL['coordinate_y'] && $fighterP['coordinate_x'] == $fighterL['coordinate_x']){
+                            return "fighter";
+                        }elseif($fighterP['coordinate_y']-1 == $tool['coordinate_y'] && $fighterP['coordinate_x'] == $tool['coordinate_x']){
+                            return "tool";
+                        }else{
+                            //IN THE CASE OF THE FIGHTER GO OUT OF THE GRID
+                            if($fighterP['coordinate_y']-1 < 0){
+                                return "You have to stay in the battlefield!";
                             }else{
-                                //IN THE CASE OF THE FIGHTER GO OUT OF THE GRID
-                                if($fighterP['coordinate_y']-1 < 0){
-                                    return "You have to stay in the battlefield!";
-                                }else{
-                                    $newPos = $fighterP['coordinate_y']-1;
-                                }
-                            }
-                        }elseif($direction == "right"){
-                            if($fighterP['coordinate_x']+1 == $fighterL['coordinate_x'] && $fighterP['coordinate_y'] == $fighterL['coordinate_y']){
-                                return "fighter";
-                            }elseif ($fighterP['coordinate_x']+1 == $tool['coordinate_x'] && $fighterP['coordinate_y'] == $tool['coordinate_y']){
-                                return "tool";
-                            }else{
-                                //THE FIGHTER GO OUT ON THE RIGHT OF THE GRID
-                                if($fighterP['coordinate_x']+1 > 14){
-                                    return "You have to stay in the battlefield!";
-                                }else{
-                                    $newPos = $fighterP['coordinate_x']+1;
-                                }
-    
-                            }
-                        }elseif($direction == "left"){
-                            if($fighterP['coordinate_x']-1 == $fighterL['coordinate_x'] && $fighterP['coordinate_y'] == $fighterL['coordinate_y']){
-                                return "fighter";
-                            }elseif ($fighterP['coordinate_x']-1 == $tool['coordinate_x'] && $fighterP['coordinate_y'] == $tool['coordinate_y']){
-                                return "tool";
-                            }else{
-                                //THE FIGHTER GO OUT OF THE GRID ON THE LEFT
-                                if($fighterP['coordinate_x']-1<0){
-                                    return "You have to stay in the battlefield!";
-                                }else{
-                                    $newPos = $fighterP['coordinate_x']-1;
-                                }
-    
-                            }            
-                        }elseif($direction == "down"){
-                            if($fighterP['coordinate_y']+1 == $fighterL['coordinate_y'] && $fighterP['coordinate_x'] == $fighterL['coordinate_x']){
-                                return "fighter";
-                            }elseif ($fighterP['coordinate_y']+1 == $tool['coordinate_y'] && $fighterP['coordinate_x'] == $tool['coordinate_x']){
-                                return "tool";
-                            }else{
-                                if($fighterP['coordinate_y']+1 > 9){
-                                    return "You have to stay in the battlefield!";
-                                }else{
-                                    $newPos = $fighterP['coordinate_y']+1;
-                                }
-    
+                                $newPos = $fighterP['coordinate_y']-1;
                             }
                         }
-    
+                    }elseif($direction == "right"){
+                        if($fighterP['coordinate_x']+1 == $fighterL['coordinate_x'] && $fighterP['coordinate_y'] == $fighterL['coordinate_y']){
+                            return "fighter";
+                        }elseif ($fighterP['coordinate_x']+1 == $tool['coordinate_x'] && $fighterP['coordinate_y'] == $tool['coordinate_y']){
+                            return "tool";
+                        }else{
+                            //THE FIGHTER GO OUT ON THE RIGHT OF THE GRID
+                            if($fighterP['coordinate_x']+1 > 14){
+                                return "You have to stay in the battlefield!";
+                            }else{
+                                $newPos = $fighterP['coordinate_x']+1;
+                            }
+
+                        }
+                    }elseif($direction == "left"){
+                        if($fighterP['coordinate_x']-1 == $fighterL['coordinate_x'] && $fighterP['coordinate_y'] == $fighterL['coordinate_y']){
+                            return "fighter";
+                        }elseif ($fighterP['coordinate_x']-1 == $tool['coordinate_x'] && $fighterP['coordinate_y'] == $tool['coordinate_y']){
+                            return "tool";
+                        }else{
+                            //THE FIGHTER GO OUT OF THE GRID ON THE LEFT
+                            if($fighterP['coordinate_x']-1<0){
+                                return "You have to stay in the battlefield!";
+                            }else{
+                                $newPos = $fighterP['coordinate_x']-1;
+                            }
+
+                        }            
+                    }elseif($direction == "down"){
+                        if($fighterP['coordinate_y']+1 == $fighterL['coordinate_y'] && $fighterP['coordinate_x'] == $fighterL['coordinate_x']){
+                            return "fighter";
+                        }elseif ($fighterP['coordinate_y']+1 == $tool['coordinate_y'] && $fighterP['coordinate_x'] == $tool['coordinate_x']){
+                            return "tool";
+                        }else{
+                            if($fighterP['coordinate_y']+1 > 9){
+                                return "You have to stay in the battlefield!";
+                            }else{
+                                $newPos = $fighterP['coordinate_y']+1;
+                            }
+
+                        }
                     }
+
                 }
-                
             }
-            
-            //NO ONE HAS BEEN FOUND SO FIGHTER CAN MOVE
-     
-            if($direction == "up" ){
-                $query->find()->update()->set(['coordinate_y' => $newPos])->where(['id' => $idFighter])->execute();
-                
-            }elseif($direction == "right"){
-                $query->find()->update()->set(['coordinate_x' => $newPos])->where(['id' => $idFighter])->execute();
-                
-            }elseif($direction == "left"){
-                $query->find()->update()->set(['coordinate_x' => $newPos])->where(['id' => $idFighter])->execute();
-                
-            }elseif($direction == "down"){
-                $query->find()->update()->set(['coordinate_y' => $newPos])->where(['id' => $idFighter])->execute();
-            }
-            
-            return $fighterPos;
             
         }
+        
+        //NO ONE HAS BEEN FOUND SO FIGHTER CAN MOVE
+    
+        if($direction == "up" ){
+            $query->find()->update()->set(['coordinate_y' => $newPos])->where(['id' => $idFighter])->execute();
+            
+        }elseif($direction == "right"){
+            $query->find()->update()->set(['coordinate_x' => $newPos])->where(['id' => $idFighter])->execute();
+            
+        }elseif($direction == "left"){
+            $query->find()->update()->set(['coordinate_x' => $newPos])->where(['id' => $idFighter])->execute();
+            
+        }elseif($direction == "down"){
+            $query->find()->update()->set(['coordinate_y' => $newPos])->where(['id' => $idFighter])->execute();
+        }
+        
+        return $fighterPos;
+        
+    }
         
           //RETURN THE NUMBER OF SKILL POINT
     public function getSkillPoints($idFighter, $idPlayer){
@@ -309,11 +302,17 @@ class FightersTable extends Table
             if($nbPoint >=1){
                 if($skill == "strength"){
                     $query->find()->update()->set(['level' => $fighterI['level']+1, 'skill_strength' => $fighterI['skill_strength']+1])->where(['id' => $idFighter])->execute();
+                    return "You increase the strength of your fighter!";
                 }elseif($skill == "health"){
                     $query->find()->update()->set(['level' => $fighterI['level']+1, 'skill_health' => $fighterI['skill_health']+3])->where(['id' => $idFighter])->execute();
+                    return "You increase the health of your fighter!";          
                 }elseif($skill == "sight"){
                     $query->find()->update()->set(['level' => $fighterI['level']+1, 'skill_sight' => $fighterI['skill_sight']+1])->where(['id' => $idFighter])->execute();
+                    return "You increase the sight of your fighter!";
+                    
                 }
+            }else{
+                return "vous n'avez pas assez de point!";
             }
             
         }

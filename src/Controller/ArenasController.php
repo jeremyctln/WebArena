@@ -76,11 +76,22 @@ class ArenasController  extends AppController
         $this->loadModel('Tools');
         $this->loadModel('Surroundings');
         
+        //TO INIT THE VARAIBLE state_information
+        $this->set('state_information',"");
+        
+        /*
+        $session = $this->request->session();
+    if($session->read('player.Pid') == null){
+        return $this->redirect(['controller' => 'Arenas', 'action' => 'login']);
+    } // 3 lignes précédentes à rajouté a chaque page (sauf login) pour cérifier qu'on est bien loggé*/
+    
+        
         $idPlayer = '545f827c-576c-4dc5-ab6d-27c33186dc3e';
         $idFighter = '1';
         
         //DISPLAY THE GRID IN THEVIEW
         $this->set('idsession', $idPlayer);
+        
         
         ///////////////////////////////////////////
         
@@ -173,13 +184,16 @@ class ArenasController  extends AppController
             }elseif($game["touche"]=="strength"){
                 $skill = "strength";
                 $skillResult = $this->Fighters->ameliorationSkill($idPlayer, $idFighter, $skill);
+                $this->set('state_information',$skillResult);
                 
             }elseif($game["touche"]=="health"){
                 $skill = "health";
                 $skillResult = $this->Fighters->ameliorationSkill($idPlayer, $idFighter, $skill);
+                $this->set('state_information',$skillResult);
             }elseif($game["touche"]=="sight"){
                 $skill = "sight";
                 $skillResult = $this->Fighters->ameliorationSkill($idPlayer, $idFighter, $skill);
+                $this->set('state_information',$skillResult);
             }
     
     
@@ -257,7 +271,6 @@ class ArenasController  extends AppController
         
         
     }
-    
 
 
 
