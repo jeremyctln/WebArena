@@ -12,7 +12,10 @@
         <?php
         
         echo $this->Form->create('post');
-        ?>
+        
+
+        echo $this->Form->control('Name',[ 'name' => 'field', 'value' => '']);
+        echo $this->Form->button('ok',[ 'name' => 'ValidationButton', 'value' => 'choisir']); ?>
 
         <div class="small-3 cell">
         <?php
@@ -20,7 +23,7 @@
         ?>
         </div>
         <?php
-        echo $this->Form->button('ok',[ 'name' => 'validationButton', 'value' => 'validName']);
+        echo $this->Form->button('ok',[ 'name' => 'ValidationButton', 'value' => 'validName']);
         ?>
 
         
@@ -32,7 +35,7 @@
         
             <li class="persoList"><table>
         <?php 
-        echo $this->Form->button('Select',['name' => 'validationButton','value' => $p['id']]);
+        echo $this->Form->button('Select',['name' => 'ValidationButton','value' => $p['id']]);
         echo "<tr>";
                 echo "<td>"; echo "Name :"; echo $p['name']; echo "</td>";
                 echo "<td>"; echo "Level :"; echo $p['level']; echo "</td>";
