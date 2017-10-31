@@ -17,18 +17,15 @@
     <?= $this->Html->script('js/what-input')?>
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css">
     <div class="foret">
-    <h1>Web Arena <small>Let's play</small><span><?php echo $this->Html->link("Home", array('controller' => 'Arenas','action'=> 'header'), array( 'class' => 'button'))?></span></h1>
+    <h1>Web Arena <small>Let's play</small><span><?php echo $this->Html->link("Home", array('controller' => 'Arenas','action'=> 'home'), array( 'class' => 'button'))?></span></h1>
     </div>
     <?= $this->Form->create('post') ?>
   <div class="sign-in-form">
-    <div>
-      <?php echo $message  ?> 
-    </div>
-    <h4 class="text-center">REGISTER</h4> 
+    <h4 class="text-center">REGISTER</h4>
+    
     <?= $this->Form->control('username',['name'=>'username','class'=>'sign-in-form-username']) ?> 
     <?= $this->Form->control('password',['name'=>'password','class'=>'sign-in-form-password']) ?></br>
-    <?= $this->Form->button('Ajouter le compte', ['value'=>'ajout','name'=>'action','class'=>'sign-in-form-button']); ?>
-    <?= $this->Form->button('Retour', ['value'=>'retour','name'=>'action','class'=>'sign-in-form-button']); ?>
+    <?= $this->Form->button('Ajouter',['class'=>'sign-in-form-button']); ?>
   </div>
   <footer class="conteneur">
         <div class="element">

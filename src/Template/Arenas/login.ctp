@@ -18,19 +18,16 @@
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css">
     
     <div class="foret">
-    <h1>Web Arena <small>Let's play</small><span><?php echo $this->Html->link("Home", array('controller' => 'Arenas','action'=> 'header'), array( 'class' => 'button'))?></span></h1>
+    <h1>Web Arena <small>Let's play</small><span><?php echo $this->Html->link("Home", array('controller' => 'Arenas','action'=> 'home'), array( 'class' => 'button'))?></span></h1>
     </div>
     
     <?= $this->Form->create('post') ?>
     <div class="sign-in-form">
-      <div>
-        <?php echo $message  ?> 
-      </div>
     <h4 class="text-center">LOGIN</h4>
     <?= $this->Form->control('username', ['value'=>'','name'=>'username','class'=>'sign-in-form-username']) ?>
     <?= $this->Form->control('password', ['value'=>'','name'=>'password','class'=>'sign-in-form-password']) ?></br>
     <?= $this->Form->button('Login', ['value'=>'connection','name'=>'login','class'=>'sign-in-form-button2']); ?></br></br>
-    <?= $this->Form->button('Register', ['value'=>'register','name'=>'login','class'=>'sign-in-form-button']); ?></br>
+    <?= $this->Form->button('Register', ['value'=>'register','name'=>'register','class'=>'sign-in-form-button']); ?></br>
       
      <?= $this->Form->button('Forgot Password', ['value'=>'oubli','name'=>'login','class'=>'sign-in-form-button']); ?>
      <?= $this->Form->end() ?>
