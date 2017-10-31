@@ -21,11 +21,16 @@
     </div>
     <?= $this->Form->create('post') ?>
   <div class="sign-in-form">
+  <div>
+      <?php echo $message  ?> 
+  </div>
     <h4 class="text-center">REGISTER</h4>
     
     <?= $this->Form->control('username',['name'=>'username','class'=>'sign-in-form-username']) ?> 
     <?= $this->Form->control('password',['name'=>'password','class'=>'sign-in-form-password']) ?></br>
-    <?= $this->Form->button('Ajouter',['class'=>'sign-in-form-button']); ?>
+    <?= $this->Form->button('Ajouter le compte', ['value'=>'ajout','name'=>'action','class'=>'sign-in-form-button']); ?>
+    <?= $this->Form->button('Retour', ['value'=>'retour','name'=>'action','class'=>'sign-in-form-button']); ?>
+    
   </div>
   <footer class="conteneur">
         <div class="element">
@@ -40,8 +45,9 @@
        <div class="element">
         <p>Option:</p>
             <ul>
-                <li>Foundation 6</li>
-                <li> Advanced management of the fighters and equipment</li>
+            <li> Option A : Advanced management of the fighters and equipment</li>
+            <li> Option B: Communication management and Guild </li>
+            <li> Option G : Foundation 6</li>
        </div>
        <div class="element">
            <p>Link:</p>
