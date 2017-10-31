@@ -75,6 +75,7 @@ class ArenasController  extends AppController
         $this->loadModel('Grids'); 
         $this->loadModel('Tools');
         $this->loadModel('Surroundings');
+        $this->loadModel('Events');
         
         //TO INIT THE VARAIBLE state_information
         $this->set('state_information',"");
@@ -119,6 +120,21 @@ class ArenasController  extends AppController
                 if ($move == 'fighter'){
                     $attack = $this->Fighters->fighterAttack($idPlayer, $idFighter, $direction);
                     $this->set('state_information',$attack);
+                    if ($attack=="You kill the enemy") {
+                        $enemyFighter = $this->Fighters->getEnemyFighter($idFighter, $idPlayer);
+                        foreach($enemyFighter as $eF){
+                        $enemyFighter = $eF['name'];
+                        }
+                        $posX = $this->Fighters->getCoordinate_x($idFighter, $idPlayer);
+                        foreach($posX as $pX){
+                        $posX = $pX['coordinate_x'];
+                        }
+                        $posY = $this->Fighters->getCoordinate_y($idFighter, $idPlayer);
+                        foreach($posY as $pY){
+                        $posY = $pY['coordinate_y'];
+                        }
+                        $eventName="Mort de";
+                        $this->Events->setEvent($enemyFighter, $posX, $posY, $eventName);}
                 }elseif ($move == "tool"){
                     //recuperer le tool à la coordonné donnée!
                     $tool = $this->Tools->retrieveTool($idFighter, $direction);
