@@ -73,8 +73,9 @@ attacks bill and hits".</br></br>
        <div class="element">
         <p>Option:</p>
             <ul>
-                <li>Foundation 6</li>
-                <li> Advanced management of the fighters and equipment</li>
+                <li> Option A : Advanced management of the fighters and equipment</li>
+                <li> Option B: Communication management and Guild </li>
+                <li> Option G : Foundation 6</li>
             </ul>
        </div>
        <div class="element">
