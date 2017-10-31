@@ -1,7 +1,9 @@
 
 <?php echo $error; ?> <br>
 
-<?php echo $GuildName; ?> <br><br>
+<h2>
+   <?php echo $GuildName; ?> 
+</h2> <hr>
 
 <?php echo $MsgContent; ?>
 
