@@ -11,10 +11,16 @@ and open the template in the editor.
        
     </head>
     <body>
+    
+    <?= $this->Html->css('header')?>
+    <?= $this->Html->css('guild');?>
     <?= $this->Html->css('sight') ?> 
     <?= $this->Html->css('foundation.min') ?> 
     <?= $this->Html->css('foundation') ?> 
     
+    <div class="title">
+    <h1>Web Arena <small>Let's play</small></h1>
+    </div>
     
     <div id="playground">
         
@@ -155,21 +161,27 @@ and open the template in the editor.
            <?php
            //PART WHEN THE PLAYER WANT TO MOVE AND TO ATTACK
             echo $this->Form->create('post');?>
-           
            <div id="buttonUp">
-                <?= $this->Form->button('Go Up', ['value' => 'up', 'name' => 'touche', 'class' => 'classUp']); ?>
+        <!--        <div class="button" style="width: 223px; height:77px; font-size: 25px; cursor: pointer;">-->
+                     <?= $this->Form->button('Go Up', ['value' => 'up', 'name' => 'touche', 'class' => 'buttonSize']); ?>
+        <!--        </div> -->
            </div>
-            
+        <!-- 'class' => 'classUp'    -->
            <div id="buttonLeftRight">
-            <?php              
-            echo $this->Form->button('left',  ['value' => 'left', 'name' => 'touche', 'class' => 'classLeft']);    
-            echo $this->Form->button('right', ['value' => 'right', 'name' => 'touche', 'class' => 'classRight']);    
-            ?>
-           </div>
-           <div id="buttonDown">
+        <!--    <div class="button" style="width: 215px; height:77px; font-size: 25px; cursor: pointer;">-->
+            <?php echo $this->Form->button('left',  ['value' => 'left', 'name' => 'touche', 'class' => 'buttonSize']);  ?>
+             
+     <!--       <div class="button" style="width: 215px; height:77px; font-size: 25px; cursor: pointer;">-->
+            <?php echo $this->Form->button('right', ['value' => 'right', 'name' => 'touche', 'class' => 'buttonSize']);?>
+       <!--     </div>-->
+       <!--    </div><!-- , 'class' => 'classLeft', , 'class' => 'classRight'-->
+       </div>     
+       <div id="buttonDown">
+     <!--          <div class="button" style="width: 223px; height:77px; font-size: 25px; cursor: pointer;"> -->
             <?php
-                echo $this->Form->button('down', ['value' =>'down', 'name' => 'touche', 'class' => 'classDown']);
-            ?>
+                echo $this->Form->button('down', ['value' =>'down', 'name' => 'touche', 'class' => 'buttonSize']);
+            ?><!--, 'class' => 'classDown-->
+   <!--            </div>-->
            </div>
             <div class="callout primary flex-child-shrink" id="infoFighter">
                 <ul class="vertical menu align-center">
@@ -178,9 +190,9 @@ and open the template in the editor.
             </div>
            <div id="buttonsSill">
            <?php
-                echo $this->Form->button('strength', ['value' => 'strength', 'name' => 'touche', 'class' => 'classStrength']);
-                echo $this->Form->button('health', ['value' => 'health', 'name' => 'touche', 'class' => 'classHealth']);
-                echo $this->Form->button('sight', ['value' => 'sight', 'name' => 'touche', 'class' => 'classSight']);
+                echo $this->Form->button('strength', ['value' => 'strength', 'name' => 'touche', 'class' => 'classSkills']);
+                echo $this->Form->button('health', ['value' => 'health', 'name' => 'touche', 'class' => 'classSkills']);
+                echo $this->Form->button('sight', ['value' => 'sight', 'name' => 'touche', 'class' => 'classSkills']);
             ?>
            </div>
            <div class="callout primary flex-child-shrink" id="infoFighter">
@@ -223,9 +235,35 @@ and open the template in the editor.
 
    </script>  
    
+   <div class="conteneur">
+        <div class="element">
+        <p>Developper :</p>
+    <ul>
+     <li>Jeremy Catelain</li>
+     <li>Cécile Coton</li>
+     <li>Etienne Hensgen</li>
+     <li>Stanislas Pinto</li>
+  </ul>
+       </div>
+       <div class="element">
+        <p>Option:</p>
+            <ul>
+                <li> Option A : Advanced management of the fighters and equipment</li>
+                <li> Option B: Communication management and Guild </li>
+                <li> Option G : Foundation 6</li>
+            </ul>
+       </div>
+       <div class="element">
+           <p>Link:</p>
+           <ul>
+               <li>Git: https://github.com/jeremyctln/WebArena/tree/master</li>
+           </ul>
+       </div>
+    </div>
 
    
    
+
 
  
     </body>
