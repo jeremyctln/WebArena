@@ -40,6 +40,14 @@ class FightersTable extends Table
         $query = TableRegistry::get('fighters')->find()->select('skill_sight')->where(['id' => $idFighter, 'player_id' => $idPlayer]);
         return $query;
     }
+    public function getCoordinate_x($idFighter, $idPlayer){
+        $query = TableRegistry::get('fighters')->find()->select('coordinate_x')->where(['id' => $idFighter, 'player_id' => $idPlayer]);
+        return $query;
+    }
+    public function getCoordinate_y($idFighter, $idPlayer){
+        $query = TableRegistry::get('fighters')->find()->select('coordinate_y')->where(['id' => $idFighter, 'player_id' => $idPlayer]);
+        return $query;
+    }
 
     
     public function getBestFighter(){
