@@ -21,7 +21,6 @@
             echo "<tr>";
                 echo "<td>"; echo $i['date']; echo "</td>";
                 echo "<td>"; echo $i['name']; echo "</td>";
-                echo "<td>"; echo $i['event']; echo "</td>";
                 echo "<td> ("; echo $i['coordinate_x']; echo(","); echo $i['coordinate_y']; echo ") </td>";
             echo "</tr>";
             
