@@ -484,14 +484,7 @@ public function fighter(){
     //part where we choose to create a new fighter
     if($this->request->is('post')){
             $game = $this->request->getData();
-            $posX = $this->Fighters->getCoordinate_x($idFighter, $idPlayer);
-            foreach($posX as $pX){
-            $posX = $pX['coordinate_x'];
-            }
-            $posY = $this->Fighters->getCoordinate_y($idFighter, $idPlayer);
-            foreach($posY as $pY){
-            $posY = $pY['coordinate_y'];
-            }
+            $posX=0; $posY=0;
             $eventName="Arrivée de";
             
             if ($game["ValidationButton"]=="validName") {
