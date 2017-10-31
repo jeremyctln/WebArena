@@ -477,20 +477,31 @@ public function fighter(){
     } // 3 lignes précédentes à rajouté a chauqe page (sauf login) pour cérifier qu'on est bien loggé
   
     $this->loadModel('Fighters');
+    $this->loadModel('Events');
     $id_player=$session->read('player.Pid');
     $name=$this->Fighters->getFightersOfPlayer($id_player);
     
     //part where we choose to create a new fighter
     if($this->request->is('post')){
             $game = $this->request->getData();
+            $posX = $this->Fighters->getCoordinate_x($idFighter, $idPlayer);
+            foreach($posX as $pX){
+            $posX = $pX['coordinate_x'];
+            }
+            $posY = $this->Fighters->getCoordinate_y($idFighter, $idPlayer);
+            foreach($posY as $pY){
+            $posY = $pY['coordinate_y'];
+            }
+            $eventName="Arrivée de";
             
             if ($game["ValidationButton"]=="validName") {
-                echo 'valide';
                 $game = $this->request->getData("nameField");
                 pr( $game);
                 
                 
-            $this->Fighters->createFighter($game,$id_player);
+                $this->Fighters->createFighter($game,$id_player);
+                $FighterName=$game;
+                $this->Events->setEvent($FighterName, $posX, $posY, $eventName);
             //$this->redirect(array('controller' => 'Arenas', 'action' => 'sight'));
             }if($game['ValidationButton']!=""){
             
@@ -500,6 +511,8 @@ public function fighter(){
             if($game['ValidationButton'] == 'choisir'){
                 $choix = $this->request->getData('field');
                 $session->write('player.Fid',$this->Fighters->getIDfromName($choix));
+                $FighterName=$choix;
+                $this->Events->setEvent($FighterName, $posX, $posY, $eventName);
                 return $this->redirect(array('controller' => 'Arenas', 'action' => 'guild'));
 
             }
