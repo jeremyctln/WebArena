@@ -12,7 +12,7 @@ class GuildTable extends Table
         // select date, tittle, message, fighter_id_from from message where fighter_id = guild_id
         // avec guild_id = select guild_id from fighter
 
-        $guild_name = "Ce joueur n'appartient à aucune guilde";
+        $guild_name = "You don't belong to a guild!";
 
         $name = TableRegistry::get('guilds')->find()
         ->select(['name'])
@@ -70,7 +70,7 @@ class GuildTable extends Table
 
     public function JoinGuild($guild_name, $Fid)
     {
-        $msg = "Aucune guilde ne s'appelle [". $guild_name. "] .";
+        $msg = "None guild are called [". $guild_name. "] .";
         $guild_id = '';
 
         $guild = TableRegistry::get('guilds')->find()
