@@ -498,6 +498,9 @@ public function fighter(){
     
     
 }
+public function home(){
+    
+}
 
 
 }
