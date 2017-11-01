@@ -80,11 +80,11 @@ class ArenasController  extends AppController
         //TO INIT THE VARAIBLE state_information
         $this->set('state_information',"");
         
-        /*
+        
         $session = $this->request->session();
     if($session->read('player.Pid') == null){
         return $this->redirect(['controller' => 'Arenas', 'action' => 'login']);
-    } // 3 lignes précédentes à rajouté a chaque page (sauf login) pour cérifier qu'on est bien loggé*/
+    } // 3 lignes précédentes à rajouté a chaque page (sauf login) pour cérifier qu'on est bien loggé
     
         
         $idPlayer = '545f827c-576c-4dc5-ab6d-27c33186dc3e';
