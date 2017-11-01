@@ -66,7 +66,6 @@ class FightersTable extends Table
     }
 
 
-
     public function fighterAttack($idPlayer, $idFighter, $direction){
         $query = TableRegistry::get('fighters');
         
@@ -186,10 +185,10 @@ class FightersTable extends Table
         }
        
     }
-         
             
 
                       
+                       
                       
     // WHEN THE PLAYER WANT TO MOVE THE FIGHTERS
     public function fighterMove($idPlayer, $idFighter, $direction){
@@ -200,11 +199,11 @@ class FightersTable extends Table
         $fighterPos = $query->find()->select(['id','coordinate_x' ,'coordinate_y'])->where(['id =' => $idFighter ]);
         
         //LIST OF ALL FIGHTER
-        $fighterList = $query->find()->select(['id', 'player_id', 'coordinate_x', 'coordinate_y']);
-
-
-
-        // DEBUT DE LA VERIFICATION DES TOOLS
+        $fighterList = $query->find()->select(['id', 'player_id', 'coordinate_x', 'coordinate_y'])->where(['id !=' => $idFighter, 'player_id !=' => $idPlayer]);
+        
+        
+        
+         // DEBUT DE LA VERIFICATION DES TOOLS///////////////////////////////
         $exists = false;
         $nulltoolexist = TableRegistry::get('tools')->find()
         ->select(['id'])
@@ -238,8 +237,9 @@ class FightersTable extends Table
             ->execute();
 
         }
-        // FIN DE LA VERIFICATION DES TOOLS
-
+        // FIN DE LA VERIFICATION DES TOOLS////////////////////////////////////
+        
+        
         
         
         //LIST OF TOOLS WITH ID FIGHTER NULL
@@ -332,6 +332,7 @@ class FightersTable extends Table
         
     }
         
+        
           //RETURN THE NUMBER OF SKILL POINT
     public function getSkillPoints($idFighter, $idPlayer){
         $query = TableRegistry::get('fighters');
@@ -370,35 +371,38 @@ class FightersTable extends Table
     
     public function createFighter($name,$player_id) {
         $query=TableRegistry::get('fighters');
-
-
-        $exists = false;
-        $nametaken = TableRegistry::get('fighters')->find()
-        ->select(['id'])
-        ->where(['name' => $name]);
-        foreach ($nametaken as $key) {
-                $exists = true;
-        }
-
-        if($exists == false)
-        {
-            $aleaCoordinateX = rand(0,14);
-            $aleaCoordinateY = rand(0,9);
-            $freeCoordinate=false;
-            while ($freeCoordinate=false) {
-                $freeCoordinate=true;
-                foreach ($posPlayer as $posP) {
-                    if ($aleaCoordinateX==$posP['coordinate_x']&& $aleaCoordinateY==$posP['coordinate_y']) {
-                        $freeCoordinate=false;
-                    }
-                }
-                foreach ($posTools as $posT) {
-                    if ($aleaCoordinateX==$posT['coordinate_x']&& $aleaCoordinateY==$posT['coordinate_y']) {
-                        $freeCoordinate=false;
-                    }      
+        
+        $aleaCoordinateX = rand(0,14);
+        $aleaCoordinateY = rand(0,9);
+        $freeCoordinate=false;
+        while ($freeCoordinate=false) {
+            $freeCoordinate=true;
+            foreach ($posPlayer as $posP) {
+                if ($aleaCoordinateX==$posP['coordinate_x']&& $aleaCoordinateY==$posP['coordinate_y']) {
+                    $freeCoordinate=false;
                 }
             }
-                
+            foreach ($posTools as $posT) {
+                if ($aleaCoordinateX==$posT['coordinate_x']&& $aleaCoordinateY==$posT['coordinate_y']) {
+                    $freeCoordinate=false;
+                }      
+            }
+            if($freeCoordinate == false){
+                $aleaCoordinateX = rand(0,14);
+                $aleaCoordinateY = rand(0,9);
+            }
+        }
+        
+        $fighterInfo = $query->find()->select(['name']);
+        $find = false;
+        foreach($fighterInfo as $fighterI){
+            if($fighterI['name'] == $name ){
+                return "The fighter already exist!";
+                $find = true;
+            }
+        }
+        if($find == false){
+        
             $query->query()->insert(['name','player_id','coordinate_x','coordinate_y','level','xp','skill_sight',
                 'skill_strength','skill_health','current_health'])->
                     values(['name' => $name,
@@ -411,19 +415,19 @@ class FightersTable extends Table
                 'skill_strength' => 1,
                 'skill_health' => 5,
                 'current_health' => 5])->execute();
-        }        
-        
+            return "You create a new fighter!";
+        }
     }
     
     //Récupérer les fighters d'un player
     
     public function getFightersOfPlayer($id_player) {
         $query=TableRegistry::get('fighters');
-        $fighterInfo = $query->find()->select(['id', 'name','level','skill_sight','skill_strength','skill_health','current_health'])->where(['player_id'=>$id_player]);
+        $fighterInfo = $query->find()->select(['id', 'name', 'coordinate_x', 'coordinate_y', 'level','skill_sight','skill_strength','skill_health','current_health'])->where(['player_id'=>$id_player]);
         return $fighterInfo;
     }
-
-    public function GetIDFromName($name)
+    
+        public function GetIDFromName($name)
     {
         $get_id = TableRegistry::get('fighters')->find()
         ->select(['id'])

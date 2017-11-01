@@ -9,11 +9,12 @@ and open the template in the editor.
 */
 
 .my_header{
-    background-image: url('../img/headerback.jpg');
-    height: 200;
-    width: 70%;
+    background-image: url('../img/headerfond3.jpg') ;
+    background-repeat: no-repeat;
+    background-position:center center;
+    height: 300px;
+    width: 100%;
     margin:auto;
     color: green;
 }
-
 

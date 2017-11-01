@@ -26,7 +26,7 @@ and open the template in the editor.
                 <li><a href="login">Login</a></li>
                 <li><a href="fighter">Fighter</a></li>
                 <li><a href="diary">Diary</a></li>
-                <li><a href="guilds">Guilds</a></li>
+                <li><a href="guild">Guilds</a></li>
             </ul>
         </nav>
     </div>
@@ -186,7 +186,7 @@ and open the template in the editor.
        <!--     </div>-->
        <!--    </div><!-- , 'class' => 'classLeft', , 'class' => 'classRight'-->
        </div>     
-       <div id="buttonDown">
+            <div id="buttonDown">
      <!--          <div class="button" style="width: 223px; height:77px; font-size: 25px; cursor: pointer;"> -->
             <?php
                 echo $this->Form->button('down', ['value' =>'down', 'name' => 'touche', 'class' => 'buttonSize']);
@@ -210,6 +210,10 @@ and open the template in the editor.
                     <li>INFORMATIONS:<?php echo(" "); echo $state_information; ?></li>
                 </ul>
             </div>
+            <?php
+                echo $this->Form->button('Tools', ['value' =>'tool', 'name' => 'touche', 'class' => 'buttonSize']);
+            ?>
+        
            <?php
                 echo $this->Form->end();
            ?>

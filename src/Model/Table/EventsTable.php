@@ -9,12 +9,11 @@ class EventsTable extends Table
 {
     //create a new tuple when an event occurs
     public function setEvent($FighterName, $posX, $posY, $eventName) {
-        $query = TableRegistry::get('events')->find();
-        $id=$query->select(['id']);
-        
-        insert('events', ['id' => max($id)+1, 'name' => $FighterName + $eventName, 'date' => new DateTime('now'),
-               'coordinate_X' => $posX, 'coordinate_Y' => $posY]
-                )->execute();
+        $query = TableRegistry::get('events');
+        $id=$query->find()->select(['id']);
+       
+        $query->query()->insert(['name','date', 'coordinate_x', 'coordinate_y'])->values(['name' => $FighterName." ".$eventName, 'date' => new \DateTime(), 'coordinate_x' => $posX, 'coordinate_y' => $posY])->execute();
+
     }
    
     //quand on se connecte, avant d'afficher tous les évènements, supprime les évènements qui ont eu lieu il y a plus de 24h
@@ -33,4 +32,6 @@ class EventsTable extends Table
     }
             
 }
+
+
 

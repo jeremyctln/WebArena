@@ -19,20 +19,42 @@
 
     <?php $this->extend('header'); ?>
     
-    <nav class="hover-underline-menu" data-menu-underline-from-center>
+<nav class="hover-underline-menu" data-menu-underline-from-center>
   <ul class="menu align-center">
     <li><a href="login">Login</a></li>
     <li><a href="register">Register</a></li>
     <li><a href="fighter">Fighter</a></li>
     <li><a href="sight">Sight</a></li>
     <li><a href="diary">Diary</a></li>
-    <li><a href="guilds">Guilds</a></li>
+    <li><a href="guild">Guilds</a></li>
   </ul>
 </nav>
 
 
   
     <div class="scroll"><strong>Game rules</strong></br></br></br>
+        
+        Alghonza was a peaceful kingdom, with a beautiful and kind young princess that everybody respected.
+Unfortunately, the princess became hardly sick.
+From this event, because of the lack of leader, the kingdom became misruled and beyond anarchy.
+Monasteries and palaces have been robbed and their objects scattered aroud the kingdom.
+Everybody is attacking each other to survive.
+You too !
+
+
+Game rules
+
+Goal : being the best, training your characters by attacking the other characters
+
+Rules :
+- You can create several characters, but you can only play with one each time
+- You move in a map where other characters from other players are.
+- You have to go near the characters to attack them.
+There is no "attack" button : if a player is at the left of your player, click on the left button to attack him.
+- You can find several bonus objects on the map : you know what it is when you are on it
+
+Have a good game!
+
 • A fighter is in a board arena at a position X, Y. This position can not be outside the
 dimensions of the arena. Only one fighter per square. One arena per website.</br></br>
 • A fighter starts with the following characteristics: view = 2, force = 1, health point = 5 (these
@@ -60,30 +82,30 @@ at 0.</br></br>
 • Each action causes an event to be created with a clear description. For example: "jonh
 attacks bill and hits".</br></br>
 </div>
-<footer class="conteneur">
-        <div class="element">
-        <p>Developper :</p>
-    <ul>
-     <li>Jeremy Catelain</li>
-     <li>Cécile Coton</li>
-     <li>Etienne Hensgen</li>
-     <li>Stanislas Pinto</li>
-  </ul>
-       </div>
-       <div class="element">
-        <p>Option:</p>
+    <div class="grid-x grid-margin-x" style="color: white; background-image: url('../img/footer1.jpg'); height: 320px;">
+         <div class="small-4 cell">
+         <p>Developper :</p>
+     <ul>
+      <li>Jeremy Catelain</li>
+      <li>Cécile Coton</li>
+      <li>Etienne Hensgen</li>
+      <li>Stanislas Pinto</li>
+   </ul>
+        </div>
+        <div class="auto cell">
+         <p>Option:</p>
+             <ul>
+                 <li> Option A : Advanced management of the fighters and equipment</li>
+                 <li> Option B: Communication management and Guild </li>
+                 <li> Option G : Foundation 6</li>
+             </ul>
+        </div>
+        <div class="auto cell">
+            <p>Link:</p>
             <ul>
-                <li> Option A : Advanced management of the fighters and equipment</li>
-                <li> Option B: Communication management and Guild </li>
-                <li> Option G : Foundation 6</li>
+                <li>Git: https://github.com/jeremyctln/WebArena/tree/master</li>
             </ul>
-       </div>
-       <div class="element">
-           <p>Link:</p>
-           <ul>
-               <li>Git: https://github.com/jeremyctln/WebArena/tree/master</li>
-           </ul>
-       </div>
-    </footer>
+        </div>
+     </div>
     </body>
 </html>

@@ -1,4 +1,3 @@
-
 span
 {
     float: right;
@@ -27,9 +26,6 @@ h1{
   background-image: url("../img/button_hover.png");
   background-repeat: no-repeat;
 }
-
-
-
 .scroll{
     height: 500px; 
     width: 1000px;
@@ -52,7 +48,7 @@ strong{
     justify-content: space-around;
     color: white;
     margin-top: 100px;
-    background-image: url("../img/footer_img.jpeg");
+    background-image: url("../img/footer1.jpeg");
     background-repeat: no-repeat;
     height: 400px;
     font-size: 22;
@@ -104,4 +100,3 @@ body {
   right: 0;
   transition: all 0.5s ease;
 }
-

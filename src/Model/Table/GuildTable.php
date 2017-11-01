@@ -138,10 +138,22 @@ class GuildTable extends Table
 
     public function CreateGuild($name)
     {
-        $ajout = TableRegistry::get('guilds')->query()
-        ->insert(['name'])
+        $ajout = TableRegistry::get('guilds');
+        //VERRIFICATION QU'AUCUNE AUTRE GUILD NE PORTE LE MEME NOM
+        
+        $guildnames =$ajout->find()->select('name');
+        
+        foreach($guildnames as $aj){
+            if($aj['name'] == $name){
+                return "This name already exist!";
+            }
+        }
+        
+        
+        $ajout->query()->insert(['name'])
         ->values(['name'=> $name])
         ->execute();
+        return "Congratulations, you create a guild!";
     }
 }
 /* 

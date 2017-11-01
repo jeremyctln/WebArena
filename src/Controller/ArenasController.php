@@ -17,33 +17,13 @@ class ArenasController  extends AppController
             return $this->redirect(['controller' => 'Arenas', 'action' => 'login']);
         } // 3 lignes précédentes à rajouté a chauqe page (sauf login) pour cérifier qu'on est bien loggé
 
-
-        //$this->set('myname',"julien");
         
         //permet de creer un lien vers le model ou un fichier s'appel Fighters
         $this->loadModel('Fighters');
-        //$figterlist=$this->Fighters->find('all');
-        //pr($figterlist->toArray());
-        //$valuetest = $this->Fighters->test();
-        //$this->set('value', $valuetest);
-        
-        //test d'un redirection
-        //if ($valuetest == 3){
-        //    return $this->redirect(['controller' => 'Arenas', 'action' => 'login']);
-        //}
-        
-        //permet d'interoger dans le model la fonction test();
-        //$value = $this->Fighters->test();
-        //$this->set('value', $value);
-        
-        //permet de recuperer l'array du meilleur fighter
+
         $value2 = $this->Fighters->getBestFighter();
         $this->set('value2',$value2);
-        
-       //$valueget = $this->Fighters->getBestFighter();
-       // pr($valueget->toArray());
-        //$this->set('valueofget',$valueget);
-        
+       
         
     }
 
@@ -84,11 +64,9 @@ class ArenasController  extends AppController
         $session = $this->request->session();
     if($session->read('player.Pid') == null){
         return $this->redirect(['controller' => 'Arenas', 'action' => 'login']);
-    } // 3 lignes précédentes à rajouté a chaque page (sauf login) pour cérifier qu'on est bien loggé
+    } // 3 lignes précédentes à rajouté a chaque page (sauf login) pour cérifier qu'on est bien loggé*/
     
         
-        $idPlayer = '545f827c-576c-4dc5-ab6d-27c33186dc3e';
-        $idFighter = '1';
         $idFighter = $session->read('player.Fid'); // L'ID COMBATTANT
         $idPlayer = $session->read('player.Pid'); // L'ID JOUEUR
         
@@ -96,16 +74,7 @@ class ArenasController  extends AppController
         $this->set('idsession', $idPlayer);
         
         
-        ///////////////////////////////////////////
-        
-        //CREATION OF NEW 
-        //$this->Tools->createTools();
-        //$toolList = $this->Tools->getTools();
-        
-        
-        ///////////////////////////////////////////
             
-        //marche
         //demander aussi pour le tableau avec les zone sombre...
         if($this->request->is('post')){
             $game = $this->request->getData();
@@ -122,21 +91,6 @@ class ArenasController  extends AppController
                 if ($move == 'fighter'){
                     $attack = $this->Fighters->fighterAttack($idPlayer, $idFighter, $direction);
                     $this->set('state_information',$attack);
-                    if ($attack=="You kill the enemy") {
-                        $enemyFighter = $this->Fighters->getEnemyFighter($idFighter, $idPlayer);
-                        foreach($enemyFighter as $eF){
-                        $enemyFighter = $eF['name'];
-                        }
-                        $posX = $this->Fighters->getCoordinate_x($idFighter, $idPlayer);
-                        foreach($posX as $pX){
-                        $posX = $pX['coordinate_x'];
-                        }
-                        $posY = $this->Fighters->getCoordinate_y($idFighter, $idPlayer);
-                        foreach($posY as $pY){
-                        $posY = $pY['coordinate_y'];
-                        }
-                        $eventName="Mort de";
-                        $this->Events->setEvent($enemyFighter, $posX, $posY, $eventName);}
                 }elseif ($move == "tool"){
                     //recuperer le tool à la coordonné donnée!
                     $tool = $this->Tools->retrieveTool($idFighter, $direction);
@@ -154,7 +108,7 @@ class ArenasController  extends AppController
     
                 if ($move == 'fighter'){
                     $attack = $this->Fighters->fighterAttack($idPlayer, $idFighter, $direction);            
-                    $this->set('state_information',$attack);                
+                    $this->set('state_information',$attack);
                 }elseif ($move == "tool"){
                     //recuperer le tool à la coordonnée donnée!
                     $tool = $this->Tools->retrieveTool($idFighter, $direction);
@@ -212,7 +166,11 @@ class ArenasController  extends AppController
                 $skill = "sight";
                 $skillResult = $this->Fighters->ameliorationSkill($idPlayer, $idFighter, $skill);
                 $this->set('state_information',$skillResult);
+            }elseif($game["touche"] == 'tool'){
+                $this->Tools->createTools();
             }
+            
+            
     
     
         }
@@ -410,6 +368,10 @@ class ArenasController  extends AppController
 
         $this->loadModel('Guild');
 
+        //INITIALISE GUILD INFO
+        $addGuild="";
+        $this->set("addGuildInfo", $addGuild);
+        
         //$this->Guild->AddMessage(1,"msg ajouté depuis un formulaire quelquonque",1);
 
         $guild_id = $this->Guild->GetGuildID($Fid);
@@ -442,7 +404,9 @@ class ArenasController  extends AppController
 
              if($data['guild'] == 'Creer')
              {
-                 $this->Guild->CreateGuild($newname);
+                 //Verifier qu'il n'exist pas d'autre guild avec le meme nom
+                 $addGuild = $this->Guild->CreateGuild($newname);
+                 $this->set("addGuildInfo", $addGuild);
              }
         }
 
@@ -471,60 +435,87 @@ public function diary(){
 }
 
 public function fighter(){
-
+    
+    //CHARGEMENT DES MODELS
+    $this->loadModel('Fighters');
+    $this->loadModel('Events');
+    
     // 3 lignes suivantes à rajouté a chauqe page (sauf login) pour cérifier qu'on est bien loggé (commenté pr désactiver si besoin, ça ne change rien à la var session)
     $session = $this->request->session();
     if($session->read('player.Pid') == null){
         return $this->redirect(['controller' => 'Arenas', 'action' => 'login']);
     } // 3 lignes précédentes à rajouté a chauqe page (sauf login) pour cérifier qu'on est bien loggé
-  
-    $this->loadModel('Fighters');
-    $this->loadModel('Events');
+
+    //DEFINED THE ID OF THE PLAYER
     $id_player=$session->read('player.Pid');
-    $name=$this->Fighters->getFightersOfPlayer($id_player);
+    //$name=$this->Fighters->getFightersOfPlayer($id_player);
     
+    //List des fighter
+    $fighter=$this->Fighters->getFightersOfPlayer($id_player);
+    $this->set('listCharac',$fighter);
+    
+    //INTIALISATION OF THE $infoCreation in the template
+    $infoCreation = "";
+    $this->set("infoCreation", $infoCreation);
     //part where we choose to create a new fighter
     if($this->request->is('post')){
             $game = $this->request->getData();
-            $posX=0; $posY=0;
-            $eventName="Arrivée de";
             
             if ($game["ValidationButton"]=="validName") {
-                $game = $this->request->getData("nameField");
-                pr( $game);
-                
-                
-                $this->Fighters->createFighter($game,$id_player);
-                $FighterName=$game;
-                $this->Events->setEvent($FighterName, $posX, $posY, $eventName);
-            //$this->redirect(array('controller' => 'Arenas', 'action' => 'sight'));
-            }if($game['ValidationButton']!=""){
-            
-                //$this->redirect(array('controller' => 'Arenas', 'action' => 'sight'));
-            }
 
-            if($game['ValidationButton'] == 'choisir'){
+                $game = $this->request->getData("nameField");
+            
+            $infoCreation = $this->Fighters->createFighter($game,$id_player);
+            
+            $this->set("infoCreation", $infoCreation);
+            
+            
+            //$this->redirect(array('controller' => 'Arenas', 'action' => 'sight'));
+            }elseif($game["ValidationButton"] == "choisir"){
+                
                 $choix = $this->request->getData('field');
                 $FighterName=$choix;
-                $temp = $this->Fighters->getIDfromName($choix);
-                if($temp != ''){
-                    $session->write('player.Fid',$temp);
-                    $this->Events->setEvent($FighterName, $posX, $posY, $eventName);
-                    return $this->redirect(array('controller' => 'Arenas', 'action' => 'sight'));
+                //CHECK IF THE FIGHTER EXIST
+                $find = false;
+                foreach($fighter as $fight){
+                    if($fight['name'] == $FighterName){
+                        $find = true;
+                    }
                 }
-
+                if($find == false){
+                    $this->set('infoCreation',"None Fighters have this name");
+                }else{
+                
+                //THE FIGHTER NAME EXIST
+                $session->write('player.Fid',$this->Fighters->getIDfromName($choix));
+                
+                
+                //DEF POSITION X AND Y
+                foreach($fighter as $fighterI){
+                    if( $fighterI['name'] == $FighterName){
+                        $posX = $fighterI['coordinate_x'];
+                        $posY = $fighterI['coordinate_y'];
+                    }
+                }
+                
+                //DEF $evenName
+                $eventName = "started to fight!";
+                
+                $this->Events->setEvent($FighterName, $posX, $posY, $eventName);
+                return $this->redirect(array('controller' => 'Arenas', 'action' => 'sight'));
+                }
+                
             }
-    }
     
     //part where we choose to play with an existant fighter (if they already have been created)
 
             
-    $fighter=$this->Fighters->getFightersOfPlayer($id_player);
-    $this->set('listCharac',$fighter);
     
     
+    }
     
 }
+
 public function home(){
     
 }

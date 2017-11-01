@@ -7,11 +7,8 @@ use Cake\ORM\TableRegistry;
 
 class PlayersTable extends Table
 {
-
-
     public function insertPlayer($id,$username, $pwd){
-
-
+        
         $hashPWD = password_hash($pwd, PASSWORD_BCRYPT);
 
         $query = TableRegistry::get('players')->query();
@@ -54,7 +51,7 @@ class PlayersTable extends Table
         foreach($check_log as $l){
 
             if ($l['id']){
-                echo "Cet Email est déjà utilisé, veuillez en choisir un autre pour continuer";
+                
                 $exist = true;
                 
             }
@@ -63,7 +60,7 @@ class PlayersTable extends Table
         foreach($check_pwd as $p){
 
             if ($p['id']){
-                echo "<br/> Ce Mot de passe est déjà utilisé, veuillez en choisir un autre pour continuer";
+                
                 $exist = true;
                 
             }
@@ -129,4 +126,5 @@ class PlayersTable extends Table
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+
 

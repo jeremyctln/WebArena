@@ -21,15 +21,16 @@
     </div>
     <?= $this->Form->create('post') ?>
   <div class="sign-in-form">
-  <div>
-      <?php echo $message  ?> 
-  </div>
+        <div class="grid-x">
+            <div class="cell" style="color: gold"> <?php echo $message  ?> </div>
+        </div>
+
     <h4 class="text-center">REGISTER</h4>
     
-    <?= $this->Form->control('username',['name'=>'username','class'=>'sign-in-form-username']) ?> 
+    <?= $this->Form->control('username/email',['name'=>'username','class'=>'sign-in-form-username']) ?> 
     <?= $this->Form->control('password',['name'=>'password','class'=>'sign-in-form-password']) ?></br>
-    <?= $this->Form->button('Ajouter le compte', ['value'=>'ajout','name'=>'action','class'=>'sign-in-form-button']); ?>
-    <?= $this->Form->button('Retour', ['value'=>'retour','name'=>'action','class'=>'sign-in-form-button']); ?>
+    <?= $this->Form->button('Add account', ['value'=>'ajout','name'=>'action','class'=>'sign-in-form-button']); ?>
+    <?= $this->Form->button('Go back', ['value'=>'retour','name'=>'action','class'=>'sign-in-form-button']); ?>
     
   </div>
   <footer class="conteneur">
