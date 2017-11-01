@@ -505,10 +505,13 @@ public function fighter(){
 
             if($game['ValidationButton'] == 'choisir'){
                 $choix = $this->request->getData('field');
-                $session->write('player.Fid',$this->Fighters->getIDfromName($choix));
                 $FighterName=$choix;
-                $this->Events->setEvent($FighterName, $posX, $posY, $eventName);
-                return $this->redirect(array('controller' => 'Arenas', 'action' => 'guild'));
+                $temp = $this->Fighters->getIDfromName($choix);
+                if($temp != ''){
+                    $session->write('player.Fid',$temp);
+                    $this->Events->setEvent($FighterName, $posX, $posY, $eventName);
+                    return $this->redirect(array('controller' => 'Arenas', 'action' => 'sight'));
+                }
 
             }
     }
