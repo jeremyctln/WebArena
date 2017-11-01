@@ -201,6 +201,46 @@ class FightersTable extends Table
         
         //LIST OF ALL FIGHTER
         $fighterList = $query->find()->select(['id', 'player_id', 'coordinate_x', 'coordinate_y']);
+
+
+
+        // DEBUT DE LA VERIFICATION DES TOOLS
+        $exists = false;
+        $nulltoolexist = TableRegistry::get('tools')->find()
+        ->select(['id'])
+        ->where(['fighter_id IS' => null]);
+        foreach ($nulltoolexist as $key) {
+                $exists = true;
+        }
+
+        if($exists == false){
+
+            $randPos1 = rand(2, 13);
+            //$randPos2 = rand(1, 14);
+            $randAlt1 = rand(2, 13);
+            //$randAlt2 = rand(8, 14);
+            $randbonnus1 = rand(1, 3);
+            //$randbonnus2 = rand(1, 3);
+            $randtype = rand(1, 3);
+            $type ='';
+
+            if($randtype == 1)
+                $type = 'strength';
+            if($randtype == 2)
+                $type ='sight';
+            if($randtype == 3)
+                $type ='health';
+
+
+            $remplissage1 = TableRegistry::get('tools')->query()
+            ->insert(['type','bonus','coordinate_x','coordinate_y','fighter_id'])
+            ->values(['type'=>$type, 'bonus'=> $randbonnus1, 'coordinate_x'=> $randPos1, 'coordinate_y'=> $randAlt1, 'fighter_id'=> NULL])
+            ->execute();
+
+        }
+        // FIN DE LA VERIFICATION DES TOOLS
+
+        
         
         //LIST OF TOOLS WITH ID FIGHTER NULL
         $toolList = $query2->find()->where(['fighter_id IS' => null] );
@@ -330,36 +370,48 @@ class FightersTable extends Table
     
     public function createFighter($name,$player_id) {
         $query=TableRegistry::get('fighters');
-        
-        $aleaCoordinateX = rand(0,14);
-        $aleaCoordinateY = rand(0,9);
-        $freeCoordinate=false;
-        while ($freeCoordinate=false) {
-            $freeCoordinate=true;
-            foreach ($posPlayer as $posP) {
-                if ($aleaCoordinateX==$posP['coordinate_x']&& $aleaCoordinateY==$posP['coordinate_y']) {
-                    $freeCoordinate=false;
+
+
+        $exists = false;
+        $nametaken = TableRegistry::get('fighters')->find()
+        ->select(['id'])
+        ->where(['name' => $name]);
+        foreach ($nametaken as $key) {
+                $exists = true;
+        }
+
+        if($exists == false)
+        {
+            $aleaCoordinateX = rand(0,14);
+            $aleaCoordinateY = rand(0,9);
+            $freeCoordinate=false;
+            while ($freeCoordinate=false) {
+                $freeCoordinate=true;
+                foreach ($posPlayer as $posP) {
+                    if ($aleaCoordinateX==$posP['coordinate_x']&& $aleaCoordinateY==$posP['coordinate_y']) {
+                        $freeCoordinate=false;
+                    }
+                }
+                foreach ($posTools as $posT) {
+                    if ($aleaCoordinateX==$posT['coordinate_x']&& $aleaCoordinateY==$posT['coordinate_y']) {
+                        $freeCoordinate=false;
+                    }      
                 }
             }
-            foreach ($posTools as $posT) {
-                if ($aleaCoordinateX==$posT['coordinate_x']&& $aleaCoordinateY==$posT['coordinate_y']) {
-                    $freeCoordinate=false;
-                }      
-            }
-        }
-            
-        $query->query()->insert(['name','player_id','coordinate_x','coordinate_y','level','xp','skill_sight',
-            'skill_strength','skill_health','current_health'])->
-                values(['name' => $name,
-            'player_id' => $player_id,
-            'coordinate_x' => $aleaCoordinateX,
-            'coordinate_y' => $aleaCoordinateY,
-            'level' => 0,
-            'xp' => 0,
-            'skill_sight' => 2,
-            'skill_strength' => 1,
-            'skill_health' => 5,
-            'current_health' => 5])->execute();
+                
+            $query->query()->insert(['name','player_id','coordinate_x','coordinate_y','level','xp','skill_sight',
+                'skill_strength','skill_health','current_health'])->
+                    values(['name' => $name,
+                'player_id' => $player_id,
+                'coordinate_x' => $aleaCoordinateX,
+                'coordinate_y' => $aleaCoordinateY,
+                'level' => 0,
+                'xp' => 0,
+                'skill_sight' => 2,
+                'skill_strength' => 1,
+                'skill_health' => 5,
+                'current_health' => 5])->execute();
+        }        
         
     }
     

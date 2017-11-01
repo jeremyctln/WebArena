@@ -11,33 +11,32 @@ class PlayersTable extends Table
 
     public function insertPlayer($id,$username, $pwd){
 
+
+        $hashPWD = password_hash($pwd, PASSWORD_BCRYPT);
+
         $query = TableRegistry::get('players')->query();
         $query->insert(['id','email', 'password'])
             ->values([
                 'id' => $id,
                 'email' => $username,
-                'password' => $pwd
+                'password' => $hashPWD 
             ])
             ->execute();
 
     }
-     public function checkCredentials($Flog, $Fpass){
+    public function checkCredentials($Flog, $Fpass){
 
-        $query_pwd = TableRegistry::get('players')->find()
-        ->select(['password'])
-        ->where(['email =' => $Flog]);
+       $query_pwd = TableRegistry::get('players')->find()
+       ->select(['password'])
+       ->where(['email =' => $Flog]);
 
+       foreach($query_pwd as $player){
 
-        // Par ici le hash mesieurs
-
-
-        foreach($query_pwd as $player){
-
-            if ($player['password'] ==  $Fpass){
-                return true;
-            }
-        }
-     }
+           if (password_verify($Fpass, $player['password'])){
+               return true;
+           }
+       }
+    }
 
      public function checkExists($Flog, $Fpass){
 
@@ -107,11 +106,11 @@ class PlayersTable extends Table
         if($exist == true)
         {
             $new_pass = substr(md5(rand()), 0, 10);
-            //$hashPWD = password_hash($new_pass, PASSWORD_BCRYPT);
+            $hashPWD = password_hash($new_pass, PASSWORD_BCRYPT);
 
             $reset_pwd = TableRegistry::get('players')->query() // augmente le lvl de 1 
             ->update()
-            ->set(['password' => $new_pass])
+            ->set(['password' => $hashPWD])
             ->where(['email' => $Flog])
             ->execute();
 
