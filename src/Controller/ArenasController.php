@@ -89,6 +89,8 @@ class ArenasController  extends AppController
         
         $idPlayer = '545f827c-576c-4dc5-ab6d-27c33186dc3e';
         $idFighter = '1';
+        $idFighter = $session->read('player.Fid'); // L'ID COMBATTANT
+        $idPlayer = $session->read('player.Pid'); // L'ID JOUEUR
         
         //DISPLAY THE GRID IN THEVIEW
         $this->set('idsession', $idPlayer);
