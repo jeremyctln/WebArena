@@ -7,7 +7,7 @@ and open the template in the editor.
 <html>
     <head>
         <meta charset="UTF-8">
-        <title></title>
+        <title>Web Arena</title>
        
     </head>
     <body>
@@ -20,6 +20,16 @@ and open the template in the editor.
     
     <div class="title">
     <h1>Web Arena <small>Let's play</small></h1>
+    <div id="nav_sight">
+        <nav class="hover-underline-menu" data-menu-underline-from-center>
+            <ul class="menu align-center">
+                <li><a href="login">Login</a></li>
+                <li><a href="fighter">Fighter</a></li>
+                <li><a href="diary">Diary</a></li>
+                <li><a href="guilds">Guilds</a></li>
+            </ul>
+        </nav>
+    </div>
     </div>
     
     <div id="playground">
@@ -51,7 +61,7 @@ and open the template in the editor.
         
     </div>
     
-   <div class="grid-x grid-padding-x">
+        <div class="grid-x grid-padding-x" style="margin-left:120px;">
       
        <div class="cell small-2 flex-container flex-dir-column"id="infoFighter" >
             <div class="callout primary flex-child-shrink" id="infoFighter">
@@ -235,35 +245,32 @@ and open the template in the editor.
 
    </script>  
    
-   <div class="conteneur">
-        <div class="element">
-        <p>Developper :</p>
-    <ul>
-     <li>Jeremy Catelain</li>
-     <li>Cécile Coton</li>
-     <li>Etienne Hensgen</li>
-     <li>Stanislas Pinto</li>
-  </ul>
-       </div>
-       <div class="element">
-        <p>Option:</p>
+
+    <div class="grid-x grid-margin-x" style="color: white; background-image: url('../img/footer1.jpg'); height: 320px;">
+         <div class="small-4 cell">
+         <p>Developper :</p>
+     <ul>
+      <li>Jeremy Catelain</li>
+      <li>Cécile Coton</li>
+      <li>Etienne Hensgen</li>
+      <li>Stanislas Pinto</li>
+   </ul>
+        </div>
+        <div class="auto cell">
+         <p>Option:</p>
+             <ul>
+                 <li> Option A : Advanced management of the fighters and equipment</li>
+                 <li> Option B: Communication management and Guild </li>
+                 <li> Option G : Foundation 6</li>
+             </ul>
+        </div>
+        <div class="auto cell">
+            <p>Link:</p>
             <ul>
-                <li> Option A : Advanced management of the fighters and equipment</li>
-                <li> Option B: Communication management and Guild </li>
-                <li> Option G : Foundation 6</li>
+                <li>Git: https://github.com/jeremyctln/WebArena/tree/master</li>
             </ul>
-       </div>
-       <div class="element">
-           <p>Link:</p>
-           <ul>
-               <li>Git: https://github.com/jeremyctln/WebArena/tree/master</li>
-           </ul>
-       </div>
-    </div>
-
-   
-   
-
+        </div>
+     </div>
 
  
     </body>

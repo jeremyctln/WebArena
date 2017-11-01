@@ -31,9 +31,8 @@
     
     <?php echo $this->Form->control('Name',[ 'name' => 'field', 'value' => '']);?>
 
-<!--         <div class="button" style="width: 223px; height:77px; font-size: 25px;"> -->
     <?php echo $this->Form->button('ok',[ 'name' => 'ValidationButton', 'value' => 'choisir', 'class' => 'buttonSize']);?>
-<!--    </div>-->
+
 </div>
 
 <div class="cell small-8 cell ">
@@ -44,11 +43,10 @@
     echo $this->Form->control('Name',[ 'name' => 'nameField', 'value' => 'create']);
     ?>
     
-<!--      <div class="button" style="width: 223px; height:77px; font-size: 25px;">-->
         <?php
         echo $this->Form->button('ok',[ 'name' => 'ValidationButton', 'value' => 'validName', 'class' => 'buttonSize']);
         ?>
-<!--      </div> -->
+
     </div>
     <div class="cell small-9 ">
     <h1>Choose one of your characters already existing :</h1>
@@ -58,9 +56,9 @@
     ?>
     
         <li class="persoList"><table>
-<!--      <div class="button" style="width: 223px; height:77px; font-size: 25px;"> -->
+
     <?php echo $this->Form->button('Select',['name' => 'ValidationButton','value' => $p['id'], 'class' => 'buttonSize']);?>
-    </div>
+
      
     <?php
     echo "<tr>";
