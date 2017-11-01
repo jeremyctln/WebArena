@@ -58,6 +58,7 @@ class FightersTable extends Table
     }
 
 
+
     public function fighterAttack($idPlayer, $idFighter, $direction){
         $query = TableRegistry::get('fighters');
         
@@ -154,9 +155,9 @@ class FightersTable extends Table
                                     // IF NOT THE CASE THE FIGHTER WIN A LEVEL
                                     if($levelFighter != $actualLevel){//AMELIORATION IS THE LEVEL INCREASE
                                         //$query->find()->update()->set(['level' => $actualLevel])->where(['id' => $fighterI['id']])->execute();
-                                        $query->find()->update()->set(['skill_sight' => $fighterI['skill_sight']+1])->where(['id' => $fighterI['id']])->execute();
+                                       /* $query->find()->update()->set(['skill_sight' => $fighterI['skill_sight']+1])->where(['id' => $fighterI['id']])->execute();
                                         $query->find()->update()->set(['skill_strength' => $fighterI['skill_strength']+1])->where(['id' => $fighterI['id']])->execute();
-                                        $query->find()->update()->set(['skill_health' => $fighterI['skill_health']+3])->where(['id' => $fighterI['id']])->execute();
+                                        $query->find()->update()->set(['skill_health' => $fighterI['skill_health']+3])->where(['id' => $fighterI['id']])->execute();*/
                                         //INCREASE THE LIFE OF THE FIGHTER TO THE MAXIMUM
                                         $query->find()->update()->set(['current_health' => $fighterI['skill_health']+3 ])->where(['id' => $fighterI['id']])->execute();
                                     }
@@ -177,6 +178,7 @@ class FightersTable extends Table
         }
        
     }
+         
             
 
                       
